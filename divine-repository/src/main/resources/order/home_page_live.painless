@@ -1,0 +1,21 @@
+double score=0;
+long state=-1;
+if (!doc['state'].empty)
+    state=doc['state'].value;
+if (state==params.start) {
+    long uv=0, msgCount=0,startTime=params.currentTime;
+    if(!doc['realUV'].empty)
+        uv=doc['realUV'].value;
+    if(!doc['totalMessageCount'].empty)
+        msgCount=doc['totalMessageCount'].value;
+    if(!doc['startTime'].empty)
+        startTime=doc['startTime'].value;
+    score += params.msgWeight * Math.log(1 + msgCount/ (1 + uv * ((params.currentTime - startTime)/3600000)));
+    score += params.uvWeight * uv;
+    score += params.freshWeight * (40-(40-7)/(1+Math.exp((25-(params.currentTime-startTime)/60000)/6)));
+    score += 50;
+} else if (state==params.preStart) {
+if (!doc['bookTotal'].empty)
+    score += Math.log(1 + doc['bookTotal'].value);
+}
+return score;

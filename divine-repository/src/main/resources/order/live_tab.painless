@@ -1,0 +1,13 @@
+double order_score=0;
+double state =doc['state'].value;
+if(state==2&&!doc['uv'].empty){
+    order_score=3000000000d;
+    long uv=doc['uv'].value;
+    order_score+=uv;
+}
+if(state==1&&!doc['bookTotal'].empty){
+    order_score=2000000000d;
+    long bookTotal=doc['bookTotal'].value;
+    order_score+=bookTotal;
+}
+return order_score;

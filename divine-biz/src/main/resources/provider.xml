@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+	    http://code.alibabatech.com/schema/dubbo
+	    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <context:annotation-config/>
+
+    <import resource="classpath*:defend-init.xml"/>
+
+    <import resource="classpath*:paul-thailand-dal.xml"/>
+
+    <!--task executor 任务执行器， 多个项目路径下的taskRunner可以在扫描器中用逗号隔开 -->
+    <context:component-scan base-package="cn.idongjia.task"/>
+
+    <bean class="cn.idongjia.divine.utils.SpringBeanLoader" lazy-init="false"/>
+
+
+
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+    <dubbo:application name="divine" owner="dongjia" organization="dongjia"/>
+    <!--内网测试机-->
+    <dubbo:registry protocol="zookeeper" address="${zookeeper}" client="curator"/>
+
+    <dubbo:annotation/>
+
+    <dubbo:protocol name="rest" port="${divine.server.port.rest}" contextpath="divine"
+                    server="tomcat"
+                    payload="16777216"/>
+
+    <dubbo:protocol name="dubbo" port="${divine.server.port.dubbo}" payload="16777216"
+                    extension="cn.idongjia.exception.filter.DubboExceptionFilter"/>
+
+    <!--<dubbo:provider filter="-default,echo,clsLoader,gnc,context,pctx,dubbo,timeout,monitor,trace"/>-->
+
+    <!--<dubbo:consumer filter="cctx"/>-->
+
+    <dubbo:monitor protocol="registry"/>
+    <bean id="ping" class="cn.idongjia.common.impl.Ping"/>
+
+    <dubbo:service interface="cn.idongjia.common.api.PingService" ref="ping" protocol="rest,dubbo"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.LiveService" ref="liveService"
+                   protocol="dubbo,rest"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.AuctionService" ref="auctionService"
+                   protocol="dubbo,rest"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.LiveLoadService" ref="liveLoadService"
+                   protocol="dubbo,rest"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.AuctionLoadService"
+                   ref="auctionLoadService"
+                   protocol="dubbo,rest"/>
+
+    <dubbo:service interface="cn.idongjia.divine.lib.service.LiveSpecialCraftsmanLoadService"
+                   ref="liveSpecialCraftsmanLoadService" protocol="dubbo,rest"/>
+
+    <dubbo:service interface="cn.idongjia.divine.lib.service.LiveSpecialCraftsmanService"
+                   ref="liveSpecialCraftsmanService" protocol="dubbo,rest"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.SessionLoadService"
+                   ref="sessionLoadService"
+                   protocol="dubbo,rest"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.SessionService"
+                   ref="sessionService"
+                   protocol="dubbo,rest"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.AuctionStateLoadService"
+                   ref="auctionStateLoadService"
+                   protocol="dubbo,rest"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.AuctionStateService"
+                   ref="auctionStateService"
+                   protocol="dubbo,rest"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.ZooLoadService"
+                   ref="zooLoadService" protocol="dubbo,rest"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.ZooService"
+                   ref="zooService" protocol="dubbo,rest"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.SessionLiveLoadService"
+                   ref="sessionLiveLoadServiceImpl" protocol="rest,dubbo"/>
+    <dubbo:service interface="cn.idongjia.divine.lib.service.SessionLiveService"
+                   ref="sessionLiveServiceImpl" protocol="rest,dubbo"/>
+    <!-- 异常框架扫描 -->
+    <context:component-scan base-package="cn.idongjia.excephandler"/>
+
+
+
+</beans>

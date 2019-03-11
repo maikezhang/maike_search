@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.LiveAnchorBlackWhiteBaseMapper">
+
+    <resultMap id="fieldColumn" type="cn.idongjia.divine.db.mybatis.pojo.LiveAnchorBlackWhiteDO">
+        <result property="id" column="id"/><!-- 自增主键 -->
+        <result property="anchorId" column="anchor_id"/><!-- 主播id -->
+        <result property="type" column="type"/><!-- 1-黑名单 2-白名单(目前白名单只限制在小程序中) -->
+        <result property="createTime" column="create_time"/><!-- 创建时间 -->
+        <result property="updateTime" column="update_time"/><!-- 更新时间 -->
+    </resultMap>
+
+    <sql id="fieldAsProperty">
+        `id`,
+        `anchor_id`,
+        `type`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <sql id="fieldWithoutId">
+        `anchor_id`,
+        `type`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <sql id="property">
+        #{id,jdbcType=BIGINT},
+        #{anchorId,jdbcType=BIGINT},
+        #{type,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="propertyWithoutId">
+        #{anchorId,jdbcType=BIGINT},
+        #{type,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="fieldEqProperty">
+        `id`=#{id,jdbcType=BIGINT},
+        `anchor_id`=#{anchorId,jdbcType=BIGINT},
+        `type`=#{type,jdbcType=INTEGER},
+        `create_time`=#{createTime,jdbcType=BIGINT},
+        `update_time`=#{updateTime,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="fieldEqPropertyIf">
+        <if test="id!=null">
+            `id`=#{id,jdbcType=BIGINT},
+        </if>
+        <if test="anchorId!=null">
+            `anchor_id`=#{anchorId,jdbcType=BIGINT},
+        </if>
+        <if test="type!=null">
+            `type`=#{type,jdbcType=INTEGER},
+        </if>
+        <if test="updateTime!=null">
+            `update_time`=#{updateTime,jdbcType=BIGINT}
+        </if>
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id!=null">
+                AND `id`=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="anchorId!=null">
+                AND `anchor_id`=#{anchorId,jdbcType=BIGINT}
+            </if>
+            <if test="type!=null">
+                AND `type`=#{type,jdbcType=INTEGER}
+            </if>
+            <if test="createTime!=null">
+                AND `create_time`=#{createTime,jdbcType=BIGINT}
+            </if>
+            <if test="updateTime!=null">
+                AND `update_time`=#{updateTime,jdbcType=BIGINT}
+            </if>
+            <if test="idList!=null" >
+                <foreach collection="idList" index="index" item="item" separator="," open="AND `id` in (" close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="anchorIds!=null and anchorIds.size>0" >
+                <foreach collection="anchorIds" index="index" item="anchorId" separator="," open="AND `anchor_id` in (" close=")">
+                    #{anchorId}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="idQuery">
+        <where>
+            <if test="id!=null" >`id`=#{id}</if>
+            <if test="id==null" >1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="cn.idongjia.divine.db.mybatis.pojo.LiveAnchorBlackWhiteDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `live_anchor_black_white` (<include refid="fieldWithoutId" />) VALUES (<include refid="propertyWithoutId" />)
+    </insert>
+
+    <update id="update" parameterType="cn.idongjia.divine.db.mybatis.pojo.LiveAnchorBlackWhiteDO">
+        UPDATE `live_anchor_black_white`
+        <set><include refid="fieldEqPropertyIf" /></set>
+        <include refid="idQuery" />
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `live_anchor_black_white` <include refid="idQuery" />
+    </delete>
+
+    <select id="getByPrimaryKey" resultMap="fieldColumn">
+        SELECT <include refid="fieldAsProperty" /> FROM `live_anchor_black_white` <include refid="idQuery" />
+    </select>
+
+    <select id="select" resultMap="fieldColumn" parameterType="cn.idongjia.divine.db.mybatis.query.LiveAnchorBlackWhiteQuery">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `live_anchor_black_white`
+        <include refid="query"/>
+        <if test="orderBy != null">ORDER BY ${orderBy}</if>
+        <if test="limit != null">LIMIT ${limit}</if>
+        <if test="offset != null">OFFSET ${offset}</if>
+    </select>
+
+    <select id="count" resultType="Integer"  parameterType="cn.idongjia.divine.db.mybatis.query.LiveAnchorBlackWhiteQuery">
+        SELECT COUNT(1) FROM `live_anchor_black_white` <include refid="query"/>
+    </select>
+</mapper>

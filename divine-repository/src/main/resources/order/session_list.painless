@@ -1,0 +1,37 @@
+double session_score=_score;
+double state =doc['state'].value;
+if(state==4){
+    session_score=40000;
+    if(!doc['planEndTime'].empty){
+           double planEndTime=    doc['planEndTime'].value;
+           planEndTime=10000/planEndTime;
+           session_score+=90/(1+Math.pow(2,-planEndTime/90));
+    }
+}else if(state==2){
+   session_score=30000;
+   if(!doc['planEndTime'].empty){
+           double planEndTime=    doc['planEndTime'].value;
+           planEndTime=10000/planEndTime;
+           session_score+=90/(1+Math.pow(2,-planEndTime/90));
+    }
+}else if(state==1){
+    session_score=20000;
+    if(!doc['planEndTime'].empty){
+            double planEndTime=    doc['planEndTime'].value;
+            planEndTime=10000/planEndTime;
+            session_score+=90/(1+Math.pow(2,-planEndTime/90));
+    }
+}else if(state==3){
+    session_score=10000;
+    if(!doc['planEndTime'].empty){
+        double planEndTime=    doc['planEndTime'].value;
+        session_score+=90/(1+Math.pow(2,-planEndTime/90));
+    }
+}
+if(!doc['weight'].empty){
+    double weight=doc['weight'].value;
+    session_score+=900/(1+Math.pow(2,-weight/900));
+
+}
+
+return session_score;

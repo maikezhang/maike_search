@@ -1,0 +1,53 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+group = 'cn.idongjia'
+sourceCompatibility = 1.8
+
+version getGitVersion('1.0.0', true)
+
+
+dependencies {
+    compile(project(':divine-lib')) {
+        exclude group: 'org.mongo'
+        exclude module: 'common'
+    }
+    compile(project(':divine-utils'))
+    compile(project(':divine-query'))
+
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
+    compile 'cn.idongjia:common:1.3.3-0258fec'
+
+
+    compile 'cn.idongjia:common:1.3.1-88f4442'
+    compileOnly('org.projectlombok:lombok')
+//    runtime('mysql:mysql-connector-java:8.0.11')
+    compile('cn.idongjia:outcry-lib:1.0.0-f30dfb6') {
+        exclude group: 'cn.idongjia'
+    }
+    compile('cn.idongjia:zoo-lib:1.0.0-b276e12') {
+        exclude module: 'user-lib'
+        exclude module: 'gem-lib'
+        exclude module: 'search-lib'
+        exclude module: 'sm-lib'
+        exclude module: 'clan-lib'
+        exclude module: 'mq-lib'
+        exclude module: 'common'
+
+
+    }
+    compile('cn.idongjia:desert-lib:1.0.0-380b004') {
+        exclude module: 'common'
+    }
+    compile 'org.mybatis:mybatis:3.2.1'
+
+    compile 'cn.idongjia:mysql-connector-java:5.1.47.m4'
+
+}
+jar {
+    from('src/main/resources') {
+        include '**/*.xml'
+    }
+}
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}

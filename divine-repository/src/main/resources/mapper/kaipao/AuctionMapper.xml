@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.AuctionMapper">
+
+    <!-- ================ 自定义内容 ================ -->
+    <!-- ================== start ================== -->
+
+    <!-- ================== end ================== -->
+    <select id="groupCraftsmanAuctionBystate" resultType="cn.idongjia.divine.db.mybatis.pojo.AuctionStateDO">
+        select ie.cuid           craftsmanId,
+        sum(CASE
+        WHEN a.state=1 and a.status != -1
+        and i.status = 1
+        and ie.cuid is not null
+        and ases.preview = 1
+        and ases.status = 2 THEN 1
+        ELSE 0 END) started,
+        sum(CASE
+        WHEN a.state=0  and a.status != -1
+        and i.status = 1
+        and ie.cuid is not null
+        and ases.preview = 1
+        and ases.status = 2 THEN 1
+        ELSE 0 END) unstart,
+        sum(CASE
+        WHEN a.state=2 and a.status != -1
+        and i.status = 1
+        and ie.cuid is not null
+        and ases.preview = 1
+        and ases.status = 2 THEN 1
+        ELSE 0 END) ended
+        from kp_auction a
+        inner join kp_auction_session_rel kasr on kasr.aid = a.iid
+        inner join kp_auction_session ases on kasr.asid = ases.asid
+        inner join kp_item_ext ie on a.iid = ie.iid
+        inner join kp_item i on a.iid = i.iid
+        where ie.cuid is not null
+        and ases.type !=1
+        <if test="userIds!=null and userIds.size>0">
+            and ie.cuid in
+            <foreach collection="userIds" item="userId" open="(" close=")" separator=",">
+                #{userId}
+            </foreach>
+        </if>
+        <if test="itemId!=null">
+            and a.iid = #{itemId}
+        </if>
+         group by ie.cuid
+        <if test="limit !=null">
+            limit #{limit}
+        </if>
+        <if test="offset !=null">
+            offset #{offset}
+        </if>
+
+    </select>
+
+    <select id="countCraftsmanAuctionByState" resultType="java.lang.Long">
+        select count(1) from( select count(1) from kp_auction
+        where status !=-1 and uid is not null
+        group by uid,state)a;
+
+    </select>
+</mapper>

@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.AuctionSessionBaseMapper">
+
+    <resultMap id="fieldColumn" type="cn.idongjia.divine.db.mybatis.pojo.AuctionSessionDO">
+        <result property="asid" column="asid"/><!-- 拍卖专场id -->
+        <result property="title" column="title"/><!-- 标题 -->
+        <result property="pic" column="pic"/><!-- 图片 -->
+        <result property="data" column="data"/><!-- 序列化内容字段 -->
+        <result property="status" column="status"/><!-- -1 已删除 0 待审核 1-修改中 3 审核中 4 已拒绝 5 已审核 2 已上线 -->
+        <result property="state" column="state"/><!-- 1 未开始2 拍卖中 3 已结束 4结拍中 -->
+        <result property="weight" column="weight"/><!-- 权重 -->
+        <result property="timestamp" column="timestamp"/><!-- 创建时间 -->
+        <result property="count" column="count"/><!-- 拍卖数量 -->
+        <result property="hot" column="hot"/><!-- 是否热门及权重，-1非热门，大于-1均为热门，正数为权重 -->
+        <result property="planetime" column="planetime"/><!-- 预计结束时间 -->
+        <result property="type" column="type"/><!-- 拍场类型:0-普通拍场,1-0元拍,2-直播拍,3-晚间专场,4-线上线下同步拍 -->
+        <result property="planatime" column="planatime"/><!-- 预计开拍时间,定时开拍用 -->
+        <result property="timestart" column="timestart"/><!-- 定时开拍:0-关闭,1-开启 -->
+        <result property="timeend" column="timeend"/><!-- 定时结拍:0-关闭,1-开启 -->
+        <result property="uid" column="uid"/><!-- 专场创建人uid -->
+        <result property="utype" column="utype"/><!-- 0-匠人 1-管理员 -->
+        <result property="bakatime" column="bakatime"/><!-- 备选开拍时间 -->
+        <result property="baketime" column="baketime"/><!-- 备选结拍时间 -->
+        <result property="lsid" column="lsid"/><!-- 关联直播场ID -->
+        <result property="topdesc" column="topdesc"/><!-- 顶部描述 -->
+        <result property="ainterval" column="ainterval"/><!-- 当专场类型是直播场时，用于记录开播和开拍的时间间隔 -->
+        <result property="preview" column="preview"/><!-- 直播场是否预展 -->
+        <result property="deposit" column="deposit"/><!-- 保证金 -->
+        <result property="forNewUser" column="for_new_user"/><!-- 是否为新用户专享；0=否，1=是 -->
+        <result property="gid" column="gid"/><!-- 拍卖场次，对应kp_auction_ground.gid -->
+    </resultMap>
+
+    <sql id="fieldAsProperty">
+        `asid`,
+        `title`,
+        `pic`,
+        `data`,
+        `status`,
+        `state`,
+        `weight`,
+        `timestamp`,
+        `count`,
+        `hot`,
+        `planetime`,
+        `type`,
+        `planatime`,
+        `timestart`,
+        `timeend`,
+        `uid`,
+        `utype`,
+        `bakatime`,
+        `baketime`,
+        `lsid`,
+        `topdesc`,
+        `ainterval`,
+        `preview`,
+        `deposit`,
+        `for_new_user`,
+        `gid`
+    </sql>
+
+    <sql id="fieldWithoutId">
+        `title`,
+        `pic`,
+        `data`,
+        `status`,
+        `state`,
+        `weight`,
+        `timestamp`,
+        `count`,
+        `hot`,
+        `planetime`,
+        `type`,
+        `planatime`,
+        `timestart`,
+        `timeend`,
+        `uid`,
+        `utype`,
+        `bakatime`,
+        `baketime`,
+        `lsid`,
+        `topdesc`,
+        `ainterval`,
+        `preview`,
+        `deposit`,
+        `for_new_user`,
+        `gid`
+    </sql>
+
+    <sql id="property">
+        #{asid,jdbcType=INTEGER},
+        #{title,jdbcType=VARCHAR},
+        #{pic,jdbcType=VARCHAR},
+        #{data,jdbcType=VARCHAR},
+        #{status,jdbcType=INTEGER},
+        #{state,jdbcType=INTEGER},
+        #{weight,jdbcType=INTEGER},
+        #{timestamp,jdbcType=INTEGER},
+        #{count,jdbcType=INTEGER},
+        #{hot,jdbcType=INTEGER},
+        #{planetime,jdbcType=INTEGER},
+        #{type,jdbcType=INTEGER},
+        #{planatime,jdbcType=INTEGER},
+        #{timestart,jdbcType=INTEGER},
+        #{timeend,jdbcType=INTEGER},
+        #{uid,jdbcType=INTEGER},
+        #{utype,jdbcType=INTEGER},
+        #{bakatime,jdbcType=VARCHAR},
+        #{baketime,jdbcType=VARCHAR},
+        #{lsid,jdbcType=INTEGER},
+        #{topdesc,jdbcType=VARCHAR},
+        #{ainterval,jdbcType=INTEGER},
+        #{preview,jdbcType=INTEGER},
+        #{deposit,jdbcType=INTEGER},
+        #{forNewUser,jdbcType=INTEGER},
+        #{gid,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="propertyWithoutId">
+        #{title,jdbcType=VARCHAR},
+        #{pic,jdbcType=VARCHAR},
+        #{data,jdbcType=VARCHAR},
+        #{status,jdbcType=INTEGER},
+        #{state,jdbcType=INTEGER},
+        #{weight,jdbcType=INTEGER},
+        #{timestamp,jdbcType=INTEGER},
+        #{count,jdbcType=INTEGER},
+        #{hot,jdbcType=INTEGER},
+        #{planetime,jdbcType=INTEGER},
+        #{type,jdbcType=INTEGER},
+        #{planatime,jdbcType=INTEGER},
+        #{timestart,jdbcType=INTEGER},
+        #{timeend,jdbcType=INTEGER},
+        #{uid,jdbcType=INTEGER},
+        #{utype,jdbcType=INTEGER},
+        #{bakatime,jdbcType=VARCHAR},
+        #{baketime,jdbcType=VARCHAR},
+        #{lsid,jdbcType=INTEGER},
+        #{topdesc,jdbcType=VARCHAR},
+        #{ainterval,jdbcType=INTEGER},
+        #{preview,jdbcType=INTEGER},
+        #{deposit,jdbcType=INTEGER},
+        #{forNewUser,jdbcType=INTEGER},
+        #{gid,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="fieldEqProperty">
+        `asid`=#{asid,jdbcType=INTEGER},
+        `title`=#{title,jdbcType=VARCHAR},
+        `pic`=#{pic,jdbcType=VARCHAR},
+        `data`=#{data,jdbcType=VARCHAR},
+        `status`=#{status,jdbcType=INTEGER},
+        `state`=#{state,jdbcType=INTEGER},
+        `weight`=#{weight,jdbcType=INTEGER},
+        `timestamp`=#{timestamp,jdbcType=INTEGER},
+        `count`=#{count,jdbcType=INTEGER},
+        `hot`=#{hot,jdbcType=INTEGER},
+        `planetime`=#{planetime,jdbcType=INTEGER},
+        `type`=#{type,jdbcType=INTEGER},
+        `planatime`=#{planatime,jdbcType=INTEGER},
+        `timestart`=#{timestart,jdbcType=INTEGER},
+        `timeend`=#{timeend,jdbcType=INTEGER},
+        `uid`=#{uid,jdbcType=INTEGER},
+        `utype`=#{utype,jdbcType=INTEGER},
+        `bakatime`=#{bakatime,jdbcType=VARCHAR},
+        `baketime`=#{baketime,jdbcType=VARCHAR},
+        `lsid`=#{lsid,jdbcType=INTEGER},
+        `topdesc`=#{topdesc,jdbcType=VARCHAR},
+        `ainterval`=#{ainterval,jdbcType=INTEGER},
+        `preview`=#{preview,jdbcType=INTEGER},
+        `deposit`=#{deposit,jdbcType=INTEGER},
+        `for_new_user`=#{forNewUser,jdbcType=INTEGER},
+        `gid`=#{gid,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="fieldEqPropertyIf">
+        <if test="asid!=null">
+            `asid`=#{asid,jdbcType=INTEGER},
+        </if>
+        <if test="title!=null">
+            `title`=#{title,jdbcType=VARCHAR},
+        </if>
+        <if test="pic!=null">
+            `pic`=#{pic,jdbcType=VARCHAR},
+        </if>
+        <if test="data!=null">
+            `data`=#{data,jdbcType=VARCHAR},
+        </if>
+        <if test="status!=null">
+            `status`=#{status,jdbcType=INTEGER},
+        </if>
+        <if test="state!=null">
+            `state`=#{state,jdbcType=INTEGER},
+        </if>
+        <if test="weight!=null">
+            `weight`=#{weight,jdbcType=INTEGER},
+        </if>
+        <if test="timestamp!=null">
+            `timestamp`=#{timestamp,jdbcType=INTEGER},
+        </if>
+        <if test="count!=null">
+            `count`=#{count,jdbcType=INTEGER},
+        </if>
+        <if test="hot!=null">
+            `hot`=#{hot,jdbcType=INTEGER},
+        </if>
+        <if test="planetime!=null">
+            `planetime`=#{planetime,jdbcType=INTEGER},
+        </if>
+        <if test="type!=null">
+            `type`=#{type,jdbcType=INTEGER},
+        </if>
+        <if test="planatime!=null">
+            `planatime`=#{planatime,jdbcType=INTEGER},
+        </if>
+        <if test="timestart!=null">
+            `timestart`=#{timestart,jdbcType=INTEGER},
+        </if>
+        <if test="timeend!=null">
+            `timeend`=#{timeend,jdbcType=INTEGER},
+        </if>
+        <if test="uid!=null">
+            `uid`=#{uid,jdbcType=INTEGER},
+        </if>
+        <if test="utype!=null">
+            `utype`=#{utype,jdbcType=INTEGER},
+        </if>
+        <if test="bakatime!=null">
+            `bakatime`=#{bakatime,jdbcType=VARCHAR},
+        </if>
+        <if test="baketime!=null">
+            `baketime`=#{baketime,jdbcType=VARCHAR},
+        </if>
+        <if test="lsid!=null">
+            `lsid`=#{lsid,jdbcType=INTEGER},
+        </if>
+        <if test="topdesc!=null">
+            `topdesc`=#{topdesc,jdbcType=VARCHAR},
+        </if>
+        <if test="ainterval!=null">
+            `ainterval`=#{ainterval,jdbcType=INTEGER},
+        </if>
+        <if test="preview!=null">
+            `preview`=#{preview,jdbcType=INTEGER},
+        </if>
+        <if test="deposit!=null">
+            `deposit`=#{deposit,jdbcType=INTEGER},
+        </if>
+        <if test="forNewUser!=null">
+            `for_new_user`=#{forNewUser,jdbcType=INTEGER},
+        </if>
+        <if test="gid!=null">
+            `gid`=#{gid,jdbcType=BIGINT}
+        </if>
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="asid!=null">
+                AND `asid`=#{asid,jdbcType=INTEGER}
+            </if>
+            <if test="title!=null and title!=''">
+                AND `title`=#{title,jdbcType=VARCHAR}
+            </if>
+            <if test="pic!=null and pic!=''">
+                AND `pic`=#{pic,jdbcType=VARCHAR}
+            </if>
+            <if test="data!=null and data!=''">
+                AND `data`=#{data,jdbcType=VARCHAR}
+            </if>
+            <if test="status!=null">
+                AND `status`=#{status,jdbcType=INTEGER}
+            </if>
+            <if test="state!=null">
+                AND `state`=#{state,jdbcType=INTEGER}
+            </if>
+            <if test="weight!=null">
+                AND `weight`=#{weight,jdbcType=INTEGER}
+            </if>
+            <if test="timestamp!=null">
+                AND `timestamp`=#{timestamp,jdbcType=INTEGER}
+            </if>
+            <if test="count!=null">
+                AND `count`=#{count,jdbcType=INTEGER}
+            </if>
+            <if test="hot!=null">
+                AND `hot`=#{hot,jdbcType=INTEGER}
+            </if>
+            <if test="planetime!=null">
+                AND `planetime`=#{planetime,jdbcType=INTEGER}
+            </if>
+            <if test="type!=null">
+                AND `type`=#{type,jdbcType=INTEGER}
+            </if>
+            <if test="planatime!=null">
+                AND `planatime`=#{planatime,jdbcType=INTEGER}
+            </if>
+            <if test="timestart!=null">
+                AND `timestart`=#{timestart,jdbcType=INTEGER}
+            </if>
+            <if test="timeend!=null">
+                AND `timeend`=#{timeend,jdbcType=INTEGER}
+            </if>
+            <if test="uid!=null">
+                AND `uid`=#{uid,jdbcType=INTEGER}
+            </if>
+            <if test="utype!=null">
+                AND `utype`=#{utype,jdbcType=INTEGER}
+            </if>
+            <if test="bakatime!=null and bakatime!=''">
+                AND `bakatime`=#{bakatime,jdbcType=VARCHAR}
+            </if>
+            <if test="baketime!=null and baketime!=''">
+                AND `baketime`=#{baketime,jdbcType=VARCHAR}
+            </if>
+            <if test="lsid!=null">
+                AND `lsid`=#{lsid,jdbcType=INTEGER}
+            </if>
+            <if test="topdesc!=null and topdesc!=''">
+                AND `topdesc`=#{topdesc,jdbcType=VARCHAR}
+            </if>
+            <if test="ainterval!=null">
+                AND `ainterval`=#{ainterval,jdbcType=INTEGER}
+            </if>
+            <if test="preview!=null">
+                AND `preview`=#{preview,jdbcType=INTEGER}
+            </if>
+            <if test="deposit!=null">
+                AND `deposit`=#{deposit,jdbcType=INTEGER}
+            </if>
+            <if test="forNewUser!=null">
+                AND `for_new_user`=#{forNewUser,jdbcType=INTEGER}
+            </if>
+            <if test="gid!=null">
+                AND `gid`=#{gid,jdbcType=BIGINT}
+            </if>
+            <if test="liveIds!=null and liveIds.size>0">
+                and lsid in
+                <foreach collection="liveIds" item="liveId" separator="," open="(" close=")">
+                    #{liveId}
+                </foreach>
+            </if>
+            <if test="sessionIds!=null and sessionIds.size>0">
+                and asid in
+                <foreach collection="sessionIds" item="sessionId" separator="," open="(" close=")">
+                    #{sessionId}
+                </foreach>
+            </if>
+            <if test="statusArray!=null and statusArray.size>0">
+                and status in
+                <foreach collection="statusArray" item="status" separator="," open="(" close=")">
+                    #{status}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="idQuery">
+        <where>
+            <if test="asid!=null">`asid`=#{asid}</if>
+            <if test="asid==null">1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="cn.idongjia.divine.db.mybatis.pojo.AuctionSessionDO" useGeneratedKeys="true"
+            keyProperty="asid">
+        INSERT INTO `kp_auction_session` (<include refid="fieldWithoutId"/>) VALUES (<include
+            refid="propertyWithoutId"/>)
+    </insert>
+
+    <update id="update" parameterType="cn.idongjia.divine.db.mybatis.pojo.AuctionSessionDO">
+        UPDATE `kp_auction_session`
+        <set>
+            <include refid="fieldEqPropertyIf"/>
+        </set>
+        <include refid="idQuery"/>
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `kp_auction_session`
+        <include refid="idQuery"/>
+    </delete>
+
+    <select id="getByPrimaryKey" resultMap="fieldColumn">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `kp_auction_session`
+        <include refid="idQuery"/>
+    </select>
+
+    <select id="select" resultMap="fieldColumn" parameterType="cn.idongjia.divine.db.mybatis.query.AuctionSessionQuery">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `kp_auction_session`
+        <include refid="query"/>
+        <if test="orderBy != null">ORDER BY ${orderBy}</if>
+        <if test="limit != null">LIMIT ${limit}</if>
+        <if test="offset != null">OFFSET ${offset}</if>
+    </select>
+
+    <select id="count" resultType="Integer" parameterType="cn.idongjia.divine.db.mybatis.query.AuctionSessionQuery">
+        SELECT COUNT(1) FROM `kp_auction_session`
+        <include refid="query"/>
+    </select>
+</mapper>

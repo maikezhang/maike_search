@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.CategoryBaseMapper">
+
+    <resultMap id="fieldColumn" type="cn.idongjia.divine.db.mybatis.pojo.CategoryDO">
+        <result property="id" column="id"/><!-- 类目编号 -->
+        <result property="name" column="name"/><!-- 类目名称 -->
+        <result property="node" column="node"/><!-- 是否为非叶子节点：1为非叶子节点，0：叶子节点 -->
+        <result property="level" column="level"/><!-- 所属层级 -->
+        <result property="path" column="path"/><!-- 类目路径，每一级类目包含上面N级父类目 -->
+        <result property="parentId" column="parent_id"/><!-- 父类目ID -->
+        <result property="weight" column="weight"/><!-- 权重 -->
+        <result property="special" column="special"/><!-- 是否特殊属性，1白名单，0普通 -->
+        <result property="status" column="status"/><!-- 1 上架 0 下架 -->
+        <result property="createTime" column="create_time"/><!-- 创建时间 -->
+        <result property="updateTime" column="update_time"/><!-- 更新时间 -->
+        <result property="shelfTime" column="shelf_time"/><!-- /*上架时间*/ -->
+    </resultMap>
+
+    <sql id="fieldAsProperty">
+        `id`,
+        `name`,
+        `node`,
+        `level`,
+        `path`,
+        `parent_id`,
+        `weight`,
+        `special`,
+        `status`,
+        `create_time`,
+        `update_time`,
+        `shelf_time`
+    </sql>
+
+    <sql id="fieldWithoutId">
+        `name`,
+        `node`,
+        `level`,
+        `path`,
+        `parent_id`,
+        `weight`,
+        `special`,
+        `status`,
+        `create_time`,
+        `update_time`,
+        `shelf_time`
+    </sql>
+
+    <sql id="property">
+        #{id,jdbcType=INTEGER},
+        #{name,jdbcType=VARCHAR},
+        #{node,jdbcType=INTEGER},
+        #{level,jdbcType=INTEGER},
+        #{path,jdbcType=VARCHAR},
+        #{parentId,jdbcType=INTEGER},
+        #{weight,jdbcType=INTEGER},
+        #{special,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT},
+        #{shelfTime,jdbcType=TIMESTAMP}
+    </sql>
+
+    <sql id="propertyWithoutId">
+        #{name,jdbcType=VARCHAR},
+        #{node,jdbcType=INTEGER},
+        #{level,jdbcType=INTEGER},
+        #{path,jdbcType=VARCHAR},
+        #{parentId,jdbcType=INTEGER},
+        #{weight,jdbcType=INTEGER},
+        #{special,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT},
+        #{shelfTime,jdbcType=TIMESTAMP}
+    </sql>
+
+    <sql id="fieldEqProperty">
+        `id`=#{id,jdbcType=INTEGER},
+        `name`=#{name,jdbcType=VARCHAR},
+        `node`=#{node,jdbcType=INTEGER},
+        `level`=#{level,jdbcType=INTEGER},
+        `path`=#{path,jdbcType=VARCHAR},
+        `parent_id`=#{parentId,jdbcType=INTEGER},
+        `weight`=#{weight,jdbcType=INTEGER},
+        `special`=#{special,jdbcType=INTEGER},
+        `status`=#{status,jdbcType=INTEGER},
+        `create_time`=#{createTime,jdbcType=BIGINT},
+        `update_time`=#{updateTime,jdbcType=BIGINT},
+        `shelf_time`=#{shelfTime,jdbcType=TIMESTAMP}
+    </sql>
+
+    <sql id="fieldEqPropertyIf">
+        <if test="id!=null">
+            `id`=#{id,jdbcType=INTEGER},
+        </if>
+        <if test="name!=null">
+            `name`=#{name,jdbcType=VARCHAR},
+        </if>
+        <if test="node!=null">
+            `node`=#{node,jdbcType=INTEGER},
+        </if>
+        <if test="level!=null">
+            `level`=#{level,jdbcType=INTEGER},
+        </if>
+        <if test="path!=null">
+            `path`=#{path,jdbcType=VARCHAR},
+        </if>
+        <if test="parentId!=null">
+            `parent_id`=#{parentId,jdbcType=INTEGER},
+        </if>
+        <if test="weight!=null">
+            `weight`=#{weight,jdbcType=INTEGER},
+        </if>
+        <if test="special!=null">
+            `special`=#{special,jdbcType=INTEGER},
+        </if>
+        <if test="status!=null">
+            `status`=#{status,jdbcType=INTEGER},
+        </if>
+        <if test="createTime!=null">
+            `create_time`=#{createTime,jdbcType=BIGINT},
+        </if>
+        <if test="updateTime!=null">
+            `update_time`=#{updateTime,jdbcType=BIGINT},
+        </if>
+        <if test="shelfTime!=null">
+            `shelf_time`=#{shelfTime,jdbcType=TIMESTAMP}
+        </if>
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id!=null">
+                AND `id`=#{id,jdbcType=INTEGER}
+            </if>
+            <if test="name!=null and name!=''">
+                AND `name`=#{name,jdbcType=VARCHAR}
+            </if>
+            <if test="node!=null">
+                AND `node`=#{node,jdbcType=INTEGER}
+            </if>
+            <if test="level!=null">
+                AND `level`=#{level,jdbcType=INTEGER}
+            </if>
+            <if test="path!=null and path!=''">
+                AND `path`=#{path,jdbcType=VARCHAR}
+            </if>
+            <if test="parentId!=null">
+                AND `parent_id`=#{parentId,jdbcType=INTEGER}
+            </if>
+            <if test="weight!=null">
+                AND `weight`=#{weight,jdbcType=INTEGER}
+            </if>
+            <if test="special!=null">
+                AND `special`=#{special,jdbcType=INTEGER}
+            </if>
+            <if test="status!=null">
+                AND `status`=#{status,jdbcType=INTEGER}
+            </if>
+            <if test="createTime!=null">
+                AND `create_time`=#{createTime,jdbcType=BIGINT}
+            </if>
+            <if test="updateTime!=null">
+                AND `update_time`=#{updateTime,jdbcType=BIGINT}
+            </if>
+            <if test="shelfTime!=null">
+                AND `shelf_time`=#{shelfTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="categoryIds!=null and categoryIds.size>0">
+                AND id in
+                <foreach collection="categoryIds" item="categoryId" separator="," open="(" close=")">
+                    #{categoryId}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="idQuery">
+        <where>
+            <if test="id!=null" >`id`=#{id}</if>
+            <if test="id==null" >1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="cn.idongjia.divine.db.mybatis.pojo.CategoryDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `dj_category` (<include refid="fieldWithoutId" />) VALUES (<include refid="propertyWithoutId" />)
+    </insert>
+
+    <update id="update" parameterType="cn.idongjia.divine.db.mybatis.pojo.CategoryDO">
+        UPDATE `dj_category`
+        <set><include refid="fieldEqPropertyIf" /></set>
+        <include refid="idQuery" />
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `dj_category` <include refid="idQuery" />
+    </delete>
+
+    <select id="getByPrimaryKey" resultMap="fieldColumn">
+        SELECT <include refid="fieldAsProperty" /> FROM `dj_category` <include refid="idQuery" />
+    </select>
+
+    <select id="select" resultMap="fieldColumn" parameterType="cn.idongjia.divine.db.mybatis.query.CategoryQuery">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `dj_category`
+        <include refid="query"/>
+        <if test="orderBy != null">ORDER BY ${orderBy}</if>
+        <if test="limit != null">LIMIT ${limit}</if>
+        <if test="offset != null">OFFSET ${offset}</if>
+    </select>
+
+    <select id="count" resultType="Integer"  parameterType="cn.idongjia.divine.db.mybatis.query.CategoryQuery">
+        SELECT COUNT(1) FROM `dj_category` <include refid="query"/>
+    </select>
+</mapper>

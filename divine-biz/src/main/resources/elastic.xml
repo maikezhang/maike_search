@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch" xsi:schemaLocation="http://www.springframework.org/schema/data/elasticsearch
+        http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--<elasticsearch:transport-client id="client" cluster-nodes="localhost:9300" cluster-name="elasticsearch"/>-->
+    <elasticsearch:transport-client id="client" cluster-nodes="${es.server}" cluster-name="${es.cluster.name}"/>
+
+    <bean id="esService" class="cn.idongjia.se.lib.service.impl.BaseServiceImpl" />
+    <bean id="mappingService" class="cn.idongjia.se.lib.service.impl.MappingServiceImpl"/>
+
+    <bean id="mappingScanner" class="cn.idongjia.se.lib.engine.mapping.MappingScanner" >
+        <property name="basePackage" value="cn.idongjia.divine.db.es.entity"/>
+        <property name="failExit" value="true"/>
+    </bean>
+
+</beans>

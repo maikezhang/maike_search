@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.LiveShowBaseMapper">
+
+    <resultMap id="fieldColumn" type="cn.idongjia.divine.db.mybatis.pojo.LiveShowDO">
+        <result property="id" column="id"/><!-- 直播id -->
+        <result property="title" column="title"/><!-- 直播名称 -->
+        <result property="uid" column="uid"/><!-- 主播uid -->
+        <result property="type" column="type"/><!-- 直播类型1. 纯直播 2. 拍卖直播 -->
+        <result property="status" column="status"/><!-- 直播状态-1删除0正常 -->
+        <result property="zid" column="zid"/><!-- 直播聊天室id -->
+        <result property="previewtm" column="previewtm"/><!-- 直播预展时间 -->
+        <result property="prestarttm" column="prestarttm"/><!-- 直播预计开始时间 -->
+        <result property="preendtm" column="preendtm"/><!-- 直播预计结束时间 -->
+        <result property="starttm" column="starttm"/><!-- 直播开始时间 -->
+        <result property="endtm" column="endtm"/><!-- 直播结束时间 -->
+        <result property="roomId" column="room_id"/><!-- 直播间ID -->
+        <result property="modifiedtm" column="modifiedtm"/><!-- 直播最后修改时间 -->
+        <result property="createtm" column="createtm"/><!-- 直播创建时间 -->
+        <result property="state" column="state"/><!-- 直播进程1未开始2已开始3已结束 -->
+        <result property="videoCoverId" column="video_cover_id"/><!-- 小视频id,对应 live_video id -->
+        <result property="generalWeight" column="general_weight"/><!-- 所有直播的通用权重 -->
+        <result property="online" column="online"/><!-- 直播的上下线状态，0=下线，1=上线 -->
+        <result property="showDesc" column="show_desc"/><!-- 直播介绍 -->
+        <result property="screenDirection" column="screen_direction"/><!-- 屏幕方向0、横屏1、竖屏 -->
+        <result property="needAutoOnline" column="need_auto_online"/><!-- 是否自动上线0、否1、是 -->
+    </resultMap>
+
+    <sql id="fieldAsProperty">
+        `id`,
+        `title`,
+        `uid`,
+        `type`,
+        `status`,
+        `zid`,
+        `previewtm`,
+        `prestarttm`,
+        `preendtm`,
+        `starttm`,
+        `endtm`,
+        `room_id`,
+        `modifiedtm`,
+        `createtm`,
+        `state`,
+        `video_cover_id`,
+        `general_weight`,
+        `online`,
+        `show_desc`,
+        `screen_direction`,
+        `need_auto_online`
+    </sql>
+
+    <sql id="fieldWithoutId">
+        `title`,
+        `uid`,
+        `type`,
+        `status`,
+        `zid`,
+        `previewtm`,
+        `prestarttm`,
+        `preendtm`,
+        `starttm`,
+        `endtm`,
+        `room_id`,
+        `modifiedtm`,
+        `createtm`,
+        `state`,
+        `video_cover_id`,
+        `general_weight`,
+        `online`,
+        `show_desc`,
+        `screen_direction`,
+        `need_auto_online`
+    </sql>
+
+    <sql id="property">
+        #{id,jdbcType=BIGINT},
+        #{title,jdbcType=VARCHAR},
+        #{uid,jdbcType=INTEGER},
+        #{type,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER},
+        #{zid,jdbcType=BIGINT},
+        #{previewtm,jdbcType=TIMESTAMP},
+        #{prestarttm,jdbcType=TIMESTAMP},
+        #{preendtm,jdbcType=TIMESTAMP},
+        #{starttm,jdbcType=TIMESTAMP},
+        #{endtm,jdbcType=TIMESTAMP},
+        #{roomId,jdbcType=BIGINT},
+        #{modifiedtm,jdbcType=TIMESTAMP},
+        #{createtm,jdbcType=TIMESTAMP},
+        #{state,jdbcType=INTEGER},
+        #{videoCoverId,jdbcType=BIGINT},
+        #{generalWeight,jdbcType=INTEGER},
+        #{online,jdbcType=INTEGER},
+        #{showDesc,jdbcType=VARCHAR},
+        #{screenDirection,jdbcType=INTEGER},
+        #{needAutoOnline,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="propertyWithoutId">
+        #{title,jdbcType=VARCHAR},
+        #{uid,jdbcType=INTEGER},
+        #{type,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER},
+        #{zid,jdbcType=BIGINT},
+        #{previewtm,jdbcType=TIMESTAMP},
+        #{prestarttm,jdbcType=TIMESTAMP},
+        #{preendtm,jdbcType=TIMESTAMP},
+        #{starttm,jdbcType=TIMESTAMP},
+        #{endtm,jdbcType=TIMESTAMP},
+        #{roomId,jdbcType=BIGINT},
+        #{modifiedtm,jdbcType=TIMESTAMP},
+        #{createtm,jdbcType=TIMESTAMP},
+        #{state,jdbcType=INTEGER},
+        #{videoCoverId,jdbcType=BIGINT},
+        #{generalWeight,jdbcType=INTEGER},
+        #{online,jdbcType=INTEGER},
+        #{showDesc,jdbcType=VARCHAR},
+        #{screenDirection,jdbcType=INTEGER},
+        #{needAutoOnline,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqProperty">
+        `id`=#{id,jdbcType=BIGINT},
+        `title`=#{title,jdbcType=VARCHAR},
+        `uid`=#{uid,jdbcType=INTEGER},
+        `type`=#{type,jdbcType=INTEGER},
+        `status`=#{status,jdbcType=INTEGER},
+        `zid`=#{zid,jdbcType=BIGINT},
+        `previewtm`=#{previewtm,jdbcType=TIMESTAMP},
+        `prestarttm`=#{prestarttm,jdbcType=TIMESTAMP},
+        `preendtm`=#{preendtm,jdbcType=TIMESTAMP},
+        `starttm`=#{starttm,jdbcType=TIMESTAMP},
+        `endtm`=#{endtm,jdbcType=TIMESTAMP},
+        `room_id`=#{roomId,jdbcType=BIGINT},
+        `modifiedtm`=#{modifiedtm,jdbcType=TIMESTAMP},
+        `createtm`=#{createtm,jdbcType=TIMESTAMP},
+        `state`=#{state,jdbcType=INTEGER},
+        `video_cover_id`=#{videoCoverId,jdbcType=BIGINT},
+        `general_weight`=#{generalWeight,jdbcType=INTEGER},
+        `online`=#{online,jdbcType=INTEGER},
+        `show_desc`=#{showDesc,jdbcType=VARCHAR},
+        `screen_direction`=#{screenDirection,jdbcType=INTEGER},
+        `need_auto_online`=#{needAutoOnline,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqPropertyIf">
+        <if test="id!=null">
+            `id`=#{id,jdbcType=BIGINT},
+        </if>
+        <if test="title!=null">
+            `title`=#{title,jdbcType=VARCHAR},
+        </if>
+        <if test="uid!=null">
+            `uid`=#{uid,jdbcType=INTEGER},
+        </if>
+        <if test="type!=null">
+            `type`=#{type,jdbcType=INTEGER},
+        </if>
+        <if test="status!=null">
+            `status`=#{status,jdbcType=INTEGER},
+        </if>
+        <if test="zid!=null">
+            `zid`=#{zid,jdbcType=BIGINT},
+        </if>
+        <if test="previewtm!=null">
+            `previewtm`=#{previewtm,jdbcType=TIMESTAMP},
+        </if>
+        <if test="prestarttm!=null">
+            `prestarttm`=#{prestarttm,jdbcType=TIMESTAMP},
+        </if>
+        <if test="preendtm!=null">
+            `preendtm`=#{preendtm,jdbcType=TIMESTAMP},
+        </if>
+        <if test="starttm!=null">
+            `starttm`=#{starttm,jdbcType=TIMESTAMP},
+        </if>
+        <if test="endtm!=null">
+            `endtm`=#{endtm,jdbcType=TIMESTAMP},
+        </if>
+        <if test="roomId!=null">
+            `room_id`=#{roomId,jdbcType=BIGINT},
+        </if>
+        <if test="modifiedtm!=null">
+            `modifiedtm`=#{modifiedtm,jdbcType=TIMESTAMP},
+        </if>
+        <if test="createtm!=null">
+            `createtm`=#{createtm,jdbcType=TIMESTAMP},
+        </if>
+        <if test="state!=null">
+            `state`=#{state,jdbcType=INTEGER},
+        </if>
+        <if test="videoCoverId!=null">
+            `video_cover_id`=#{videoCoverId,jdbcType=BIGINT},
+        </if>
+        <if test="generalWeight!=null">
+            `general_weight`=#{generalWeight,jdbcType=INTEGER},
+        </if>
+        <if test="online!=null">
+            `online`=#{online,jdbcType=INTEGER},
+        </if>
+        <if test="showDesc!=null">
+            `show_desc`=#{showDesc,jdbcType=VARCHAR},
+        </if>
+        <if test="screenDirection!=null">
+            `screen_direction`=#{screenDirection,jdbcType=INTEGER},
+        </if>
+        <if test="needAutoOnline!=null">
+            `need_auto_online`=#{needAutoOnline,jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id!=null">
+                AND `id`=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="title!=null and title!=''">
+                AND `title`=#{title,jdbcType=VARCHAR}
+            </if>
+            <if test="uid!=null">
+                AND `uid`=#{uid,jdbcType=INTEGER}
+            </if>
+            <if test="type!=null">
+                AND `type`=#{type,jdbcType=INTEGER}
+            </if>
+            <if test="status!=null">
+                AND `status`=#{status,jdbcType=INTEGER}
+            </if>
+            <if test="zid!=null">
+                AND `zid`=#{zid,jdbcType=BIGINT}
+            </if>
+            <if test="previewtm!=null">
+                AND `previewtm`=#{previewtm,jdbcType=TIMESTAMP}
+            </if>
+            <if test="prestarttm!=null">
+                AND `prestarttm`=#{prestarttm,jdbcType=TIMESTAMP}
+            </if>
+            <if test="preendtm!=null">
+                AND `preendtm`=#{preendtm,jdbcType=TIMESTAMP}
+            </if>
+            <if test="starttm!=null">
+                AND `starttm`=#{starttm,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endtm!=null">
+                AND `endtm`=#{endtm,jdbcType=TIMESTAMP}
+            </if>
+            <if test="roomId!=null">
+                AND `room_id`=#{roomId,jdbcType=BIGINT}
+            </if>
+            <if test="modifiedtm!=null">
+                AND `modifiedtm`=#{modifiedtm,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createtm!=null">
+                AND `createtm`=#{createtm,jdbcType=TIMESTAMP}
+            </if>
+            <if test="state!=null">
+                AND `state`=#{state,jdbcType=INTEGER}
+            </if>
+            <if test="videoCoverId!=null">
+                AND `video_cover_id`=#{videoCoverId,jdbcType=BIGINT}
+            </if>
+            <if test="generalWeight!=null">
+                AND `general_weight`=#{generalWeight,jdbcType=INTEGER}
+            </if>
+            <if test="online!=null">
+                AND `online`=#{online,jdbcType=INTEGER}
+            </if>
+            <if test="showDesc!=null and showDesc!=''">
+                AND `show_desc`=#{showDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="screenDirection!=null">
+                AND `screen_direction`=#{screenDirection,jdbcType=INTEGER}
+            </if>
+            <if test="needAutoOnline!=null">
+                AND `need_auto_online`=#{needAutoOnline,jdbcType=INTEGER}
+            </if>
+            <if test="statusArray !=null and statusArray.size>0">
+                AND status in
+                <foreach collection="statusArray" item="status" separator="," open="(" close=")">
+                    #{status}
+                </foreach>
+            </if>
+            <if test="liveIds !=null and liveIds.size>0">
+                AND id in
+                <foreach collection="liveIds" item="liveId" separator="," open="(" close=")">
+                    #{liveId}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="idQuery">
+        <where>
+            <if test="id!=null" >`id`=#{id}</if>
+            <if test="id==null" >1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="cn.idongjia.divine.db.mybatis.pojo.LiveShowDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `live_show` (<include refid="fieldWithoutId" />) VALUES (<include refid="propertyWithoutId" />)
+    </insert>
+
+    <update id="update" parameterType="cn.idongjia.divine.db.mybatis.pojo.LiveShowDO">
+        UPDATE `live_show`
+        <set><include refid="fieldEqPropertyIf" /></set>
+        <include refid="idQuery" />
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `live_show` <include refid="idQuery" />
+    </delete>
+
+    <select id="getByPrimaryKey" resultMap="fieldColumn">
+        SELECT <include refid="fieldAsProperty" /> FROM `live_show` <include refid="idQuery" />
+    </select>
+
+    <select id="select" resultMap="fieldColumn" parameterType="cn.idongjia.divine.db.mybatis.query.LiveShowQuery">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `live_show`
+        <include refid="query"/>
+        <if test="orderBy != null">ORDER BY ${orderBy}</if>
+        <if test="limit != null">LIMIT ${limit}</if>
+        <if test="offset != null">OFFSET ${offset}</if>
+    </select>
+
+    <select id="count" resultType="Integer"  parameterType="cn.idongjia.divine.db.mybatis.query.LiveShowQuery">
+        SELECT COUNT(1) FROM `live_show` <include refid="query"/>
+    </select>
+</mapper>

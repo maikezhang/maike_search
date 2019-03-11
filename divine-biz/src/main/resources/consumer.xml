@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	    http://code.alibabatech.com/schema/dubbo
+	    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+    <dubbo:reference interface="cn.idongjia.zoo.api.ZooCountService" id="zooCountService"
+            protocol="dubbo" check="false"
+            timeout="5000"/>
+    <dubbo:reference interface="cn.idongjia.desert.service.SegService"
+            id="segService" protocol="dubbo" check="false"
+        timeout="5000"/>
+    <dubbo:reference interface="cn.idongjia.dw.lib.service.community.AuctionSearchService"
+            id="auctionSearchService" protocol="dubbo" check="false"
+            timeout="5000"/>
+    <dubbo:reference interface="cn.idongjia.outcry.service.DjtService"
+            id="djtService" protocol="dubbo" check="false"
+            timeout="5000"/>
+</beans>

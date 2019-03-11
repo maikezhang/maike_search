@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="kafkaScanner" class="cn.idongjia.divine.conf.DivineTopicHandlerManager" depends-on="disconfiValueManager">
+        <property name="basePackage" value="cn.idongjia.divine.mq.kafka.listener"/>
+    </bean>
+
+
+
+    <!-- kafka消费者 -->
+    <bean id="kafkaConsumerGroup" class="cn.idongjia.kafka.consumer.ConsumerGroup"
+            destroy-method="destory">
+        <property name="groupId" value="divine"/>
+        <property name="autoCommit" value="false"/>
+        <property name="consumerNums" value="6"/>
+        <!-- TODO 需要一个统一配置文件 -->
+        <property name="clusterAddr" value="${kafka.cluster.addr}"/>
+        <property name="valueDeserializer"
+                value="org.apache.kafka.common.serialization.StringDeserializer"/>
+    </bean>
+
+
+    <!-- kafka生产者 -->
+    <!--<bean id="kafkaProducer" class="cn.idongjia.kafka.producer.Producer"-->
+            <!--init-method="init">-->
+        <!--<property name="clusterAddr" value="10.171.205.29:9092"/>-->
+        <!--<property name="clientId" value="testClientId"/>-->
+        <!--<property name="async" value="false"/>-->
+    <!--</bean>-->
+</beans>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.AuctionManualRecommendBaseMapper">
+
+    <resultMap id="fieldColumn" type="cn.idongjia.divine.db.mybatis.pojo.AuctionManualRecommendDO">
+        <result property="id" column="id"/><!--  -->
+        <result property="itemId" column="item_id"/><!-- 拍品id -->
+        <result property="weight" column="weight"/><!-- 权重 -->
+        <result property="isDelete" column="is_delete"/><!-- 0=否，1=是 -->
+        <result property="userType" column="user_type"/><!-- 推荐用户类别；1=新用户，2=老用户 -->
+        <result property="createTime" column="create_time"/><!--  -->
+        <result property="updateTime" column="update_time"/><!--  -->
+    </resultMap>
+
+    <sql id="fieldAsProperty">
+        `id`,
+        `item_id`,
+        `weight`,
+        `is_delete`,
+        `user_type`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <sql id="fieldWithoutId">
+        `item_id`,
+        `weight`,
+        `is_delete`,
+        `user_type`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <sql id="property">
+        #{id,jdbcType=BIGINT},
+        #{itemId,jdbcType=BIGINT},
+        #{weight,jdbcType=INTEGER},
+        #{isDelete,jdbcType=INTEGER},
+        #{userType,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="propertyWithoutId">
+        #{itemId,jdbcType=BIGINT},
+        #{weight,jdbcType=INTEGER},
+        #{isDelete,jdbcType=INTEGER},
+        #{userType,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="fieldEqProperty">
+        `id`=#{id,jdbcType=BIGINT},
+        `item_id`=#{itemId,jdbcType=BIGINT},
+        `weight`=#{weight,jdbcType=INTEGER},
+        `is_delete`=#{isDelete,jdbcType=INTEGER},
+        `user_type`=#{userType,jdbcType=INTEGER},
+        `create_time`=#{createTime,jdbcType=BIGINT},
+        `update_time`=#{updateTime,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="fieldEqPropertyIf">
+        <if test="id!=null">
+            `id`=#{id,jdbcType=BIGINT},
+        </if>
+        <if test="itemId!=null">
+            `item_id`=#{itemId,jdbcType=BIGINT},
+        </if>
+        <if test="weight!=null">
+            `weight`=#{weight,jdbcType=INTEGER},
+        </if>
+        <if test="isDelete!=null">
+            `is_delete`=#{isDelete,jdbcType=INTEGER},
+        </if>
+        <if test="userType!=null">
+            `user_type`=#{userType,jdbcType=INTEGER},
+        </if>
+        <if test="createTime!=null">
+            `create_time`=#{createTime,jdbcType=BIGINT},
+        </if>
+        <if test="updateTime!=null">
+            `update_time`=#{updateTime,jdbcType=BIGINT}
+        </if>
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id!=null">
+                AND `id`=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="itemId!=null">
+                AND `item_id`=#{itemId,jdbcType=BIGINT}
+            </if>
+            <if test="weight!=null">
+                AND `weight`=#{weight,jdbcType=INTEGER}
+            </if>
+            <if test="isDelete!=null">
+                AND `is_delete`=#{isDelete,jdbcType=INTEGER}
+            </if>
+            <if test="userType!=null">
+                AND `user_type`=#{userType,jdbcType=INTEGER}
+            </if>
+            <if test="createTime!=null">
+                AND `create_time`=#{createTime,jdbcType=BIGINT}
+            </if>
+            <if test="updateTime!=null">
+                AND `update_time`=#{updateTime,jdbcType=BIGINT}
+            </if>
+            <if test="itemIds!=null and itemIds.size>0">
+                and item_id in
+                <foreach collection="itemIds" item="itemId" separator="," open="(" close=")">
+                    #{itemId}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="idQuery">
+        <where>
+            <if test="id!=null" >`id`=#{id}</if>
+            <if test="id==null" >1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="cn.idongjia.divine.db.mybatis.pojo.AuctionManualRecommendDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `auction_manual_recommend` (<include refid="fieldWithoutId" />) VALUES (<include refid="propertyWithoutId" />)
+    </insert>
+
+    <update id="update" parameterType="cn.idongjia.divine.db.mybatis.pojo.AuctionManualRecommendDO">
+        UPDATE `auction_manual_recommend`
+        <set><include refid="fieldEqPropertyIf" /></set>
+        <include refid="idQuery" />
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `auction_manual_recommend` <include refid="idQuery" />
+    </delete>
+
+    <select id="getByPrimaryKey" resultMap="fieldColumn">
+        SELECT <include refid="fieldAsProperty" /> FROM `auction_manual_recommend` <include refid="idQuery" />
+    </select>
+
+    <select id="select" resultMap="fieldColumn" parameterType="cn.idongjia.divine.db.mybatis.query.AuctionManualRecommendQuery">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `auction_manual_recommend`
+        <include refid="query"/>
+        <if test="orderBy != null">ORDER BY ${orderBy}</if>
+        <if test="limit != null">LIMIT ${limit}</if>
+        <if test="offset != null">OFFSET ${offset}</if>
+    </select>
+
+    <select id="count" resultType="Integer"  parameterType="cn.idongjia.divine.db.mybatis.query.AuctionManualRecommendQuery">
+        SELECT COUNT(1) FROM `auction_manual_recommend` <include refid="query"/>
+    </select>
+</mapper>

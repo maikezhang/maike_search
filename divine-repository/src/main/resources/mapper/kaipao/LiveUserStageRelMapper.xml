@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.LiveUserStageRelMapper">
+
+    <!-- ================ 自定义内容 ================ -->
+    <!-- ================== start ================== -->
+
+    <!-- ================== end ================== -->
+    <select id="listByLiveIds" resultMap="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.LiveUserStageRelBaseMapper.fieldColumn">
+        select
+        <include refid="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.LiveUserStageRelBaseMapper.fieldAsProperty"/>
+        from live_user_stage_rel
+        where status=1
+        and live_id in
+        <foreach collection="liveIds" item="liveId" separator="," open="(" close=")">
+            #{liveId}
+        </foreach>
+
+    </select>
+</mapper>

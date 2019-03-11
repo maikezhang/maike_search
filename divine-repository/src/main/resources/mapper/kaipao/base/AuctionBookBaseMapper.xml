@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.AuctionBookBaseMapper">
+
+    <resultMap id="fieldColumn" type="cn.idongjia.divine.db.mybatis.pojo.AuctionBookDO">
+        <result property="id" column="id"/><!-- 唯一ID -->
+        <result property="userId" column="user_id"/><!-- 订阅用户ID -->
+        <result property="contentId" column="content_id"/><!-- 订阅内容ID -->
+        <result property="contentType" column="content_type"/><!-- 订阅内容类型0、普通拍卖1、直播拍卖 -->
+        <result property="status" column="status"/><!-- 订阅状态-1、删除0、正常 -->
+        <result property="createTime" column="create_time"/><!-- 创建时间 -->
+        <result property="updateTime" column="update_time"/><!-- 最后修改时间 -->
+    </resultMap>
+
+    <sql id="fieldAsProperty">
+        `id`,
+        `user_id`,
+        `content_id`,
+        `content_type`,
+        `status`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <sql id="fieldWithoutId">
+        `user_id`,
+        `content_id`,
+        `content_type`,
+        `status`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <sql id="property">
+        #{id,jdbcType=BIGINT},
+        #{userId,jdbcType=BIGINT},
+        #{contentId,jdbcType=BIGINT},
+        #{contentType,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="propertyWithoutId">
+        #{userId,jdbcType=BIGINT},
+        #{contentId,jdbcType=BIGINT},
+        #{contentType,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="fieldEqProperty">
+        `id`=#{id,jdbcType=BIGINT},
+        `user_id`=#{userId,jdbcType=BIGINT},
+        `content_id`=#{contentId,jdbcType=BIGINT},
+        `content_type`=#{contentType,jdbcType=INTEGER},
+        `status`=#{status,jdbcType=INTEGER},
+        `create_time`=#{createTime,jdbcType=BIGINT},
+        `update_time`=#{updateTime,jdbcType=BIGINT}
+    </sql>
+
+    <sql id="fieldEqPropertyIf">
+        <if test="id!=null">
+            `id`=#{id,jdbcType=BIGINT},
+        </if>
+        <if test="userId!=null">
+            `user_id`=#{userId,jdbcType=BIGINT},
+        </if>
+        <if test="contentId!=null">
+            `content_id`=#{contentId,jdbcType=BIGINT},
+        </if>
+        <if test="contentType!=null">
+            `content_type`=#{contentType,jdbcType=INTEGER},
+        </if>
+        <if test="status!=null">
+            `status`=#{status,jdbcType=INTEGER},
+        </if>
+        <if test="createTime!=null">
+            `create_time`=#{createTime,jdbcType=BIGINT},
+        </if>
+        <if test="updateTime!=null">
+            `update_time`=#{updateTime,jdbcType=BIGINT}
+        </if>
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id!=null">
+                AND `id`=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId!=null">
+                AND `user_id`=#{userId,jdbcType=BIGINT}
+            </if>
+            <if test="contentId!=null">
+                AND `content_id`=#{contentId,jdbcType=BIGINT}
+            </if>
+            <if test="contentType!=null">
+                AND `content_type`=#{contentType,jdbcType=INTEGER}
+            </if>
+            <if test="status!=null">
+                AND `status`=#{status,jdbcType=INTEGER}
+            </if>
+            <if test="createTime!=null">
+                AND `create_time`=#{createTime,jdbcType=BIGINT}
+            </if>
+            <if test="updateTime!=null">
+                AND `update_time`=#{updateTime,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="idQuery">
+        <where>
+            <if test="id!=null" >`id`=#{id}</if>
+            <if test="id==null" >1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="cn.idongjia.divine.db.mybatis.pojo.AuctionBookDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `auction_book` (<include refid="fieldWithoutId" />) VALUES (<include refid="propertyWithoutId" />)
+    </insert>
+
+    <update id="update" parameterType="cn.idongjia.divine.db.mybatis.pojo.AuctionBookDO">
+        UPDATE `auction_book`
+        <set><include refid="fieldEqPropertyIf" /></set>
+        <include refid="idQuery" />
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `auction_book` <include refid="idQuery" />
+    </delete>
+
+    <select id="getByPrimaryKey" resultMap="fieldColumn">
+        SELECT <include refid="fieldAsProperty" /> FROM `auction_book` <include refid="idQuery" />
+    </select>
+
+    <select id="select" resultMap="fieldColumn" parameterType="cn.idongjia.divine.db.mybatis.query.AuctionBookQuery">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `auction_book`
+        <include refid="query"/>
+        <if test="orderBy != null">ORDER BY ${orderBy}</if>
+        <if test="limit != null">LIMIT ${limit}</if>
+        <if test="offset != null">OFFSET ${offset}</if>
+    </select>
+
+    <select id="count" resultType="Integer"  parameterType="cn.idongjia.divine.db.mybatis.query.AuctionBookQuery">
+        SELECT COUNT(1) FROM `auction_book` <include refid="query"/>
+    </select>
+</mapper>

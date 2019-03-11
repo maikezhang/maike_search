@@ -1,0 +1,27 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'cn.idongjia'
+version getGitVersion('1.0.0', true)
+sourceCompatibility = 1.8
+
+
+
+dependencies {
+    compile(project(':divine-lib')) {
+        exclude group: 'org.mongo'
+    }
+    compile project(':divine-utils')
+    compile('cn.idongjia:dw-lib:1.2.0-2a3477d') {
+        exclude group: 'cn.idongjia'
+        exclude module: 'common'
+        exclude module: 'spring-data-mongodb'
+        exclude module: 'mongo-java-driver'
+
+    }
+    compile 'org.json:json:20160810'
+
+}
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}

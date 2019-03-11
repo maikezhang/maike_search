@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.AuctionExtBaseMapper">
+
+    <resultMap id="fieldColumn" type="cn.idongjia.divine.db.mybatis.pojo.AuctionExtDO">
+        <result property="itemId" column="item_id"/><!-- 拍卖ID -->
+        <result property="circleEndTime" column="circle_end_time"/><!-- 绝杀拍循环结束时间 -->
+        <result property="auctionDuration" column="auction_duration"/><!-- 绝杀拍持续时间 -->
+        <result property="circulation" column="circulation"/><!-- 绝杀拍是否循环0、否1、是 -->
+        <result property="floorPrice" column="floor_price"/><!-- 断崖拍封底价格 -->
+        <result property="decadePrice" column="decade_price"/><!-- 断崖拍每次降价幅度 -->
+        <result property="decadeDuration" column="decade_duration"/><!-- 断崖拍降价间隔 -->
+        <result property="notify" column="notify"/><!-- 是否推送 0：不推（默认）1：推 -->
+        <result property="createTime" column="create_time"/><!-- 创建时间 -->
+        <result property="updateTime" column="update_time"/><!-- 最后更新时间 -->
+        <result property="id" column="id"/><!--  -->
+        <result property="endTip" column="end_tip"/><!-- 结拍是否推送tip，1=推送，0=不推送 -->
+    </resultMap>
+
+    <sql id="fieldAsProperty">
+        `item_id`,
+        `circle_end_time`,
+        `auction_duration`,
+        `circulation`,
+        `floor_price`,
+        `decade_price`,
+        `decade_duration`,
+        `notify`,
+        `create_time`,
+        `update_time`,
+        `id`,
+        `end_tip`
+    </sql>
+
+    <sql id="fieldWithoutId">
+        `item_id`,
+        `circle_end_time`,
+        `auction_duration`,
+        `circulation`,
+        `floor_price`,
+        `decade_price`,
+        `decade_duration`,
+        `notify`,
+        `create_time`,
+        `update_time`,
+        `end_tip`
+    </sql>
+
+    <sql id="property">
+        #{itemId,jdbcType=BIGINT},
+        #{circleEndTime,jdbcType=BIGINT},
+        #{auctionDuration,jdbcType=BIGINT},
+        #{circulation,jdbcType=INTEGER},
+        #{floorPrice,jdbcType=BIGINT},
+        #{decadePrice,jdbcType=BIGINT},
+        #{decadeDuration,jdbcType=BIGINT},
+        #{notify,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT},
+        #{id,jdbcType=BIGINT},
+        #{endTip,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="propertyWithoutId">
+        #{itemId,jdbcType=BIGINT},
+        #{circleEndTime,jdbcType=BIGINT},
+        #{auctionDuration,jdbcType=BIGINT},
+        #{circulation,jdbcType=INTEGER},
+        #{floorPrice,jdbcType=BIGINT},
+        #{decadePrice,jdbcType=BIGINT},
+        #{decadeDuration,jdbcType=BIGINT},
+        #{notify,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT},
+        #{endTip,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqProperty">
+        `item_id`=#{itemId,jdbcType=BIGINT},
+        `circle_end_time`=#{circleEndTime,jdbcType=BIGINT},
+        `auction_duration`=#{auctionDuration,jdbcType=BIGINT},
+        `circulation`=#{circulation,jdbcType=INTEGER},
+        `floor_price`=#{floorPrice,jdbcType=BIGINT},
+        `decade_price`=#{decadePrice,jdbcType=BIGINT},
+        `decade_duration`=#{decadeDuration,jdbcType=BIGINT},
+        `notify`=#{notify,jdbcType=INTEGER},
+        `create_time`=#{createTime,jdbcType=BIGINT},
+        `update_time`=#{updateTime,jdbcType=BIGINT},
+        `id`=#{id,jdbcType=BIGINT},
+        `end_tip`=#{endTip,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqPropertyIf">
+        <if test="itemId!=null">
+            `item_id`=#{itemId,jdbcType=BIGINT},
+        </if>
+        <if test="circleEndTime!=null">
+            `circle_end_time`=#{circleEndTime,jdbcType=BIGINT},
+        </if>
+        <if test="auctionDuration!=null">
+            `auction_duration`=#{auctionDuration,jdbcType=BIGINT},
+        </if>
+        <if test="circulation!=null">
+            `circulation`=#{circulation,jdbcType=INTEGER},
+        </if>
+        <if test="floorPrice!=null">
+            `floor_price`=#{floorPrice,jdbcType=BIGINT},
+        </if>
+        <if test="decadePrice!=null">
+            `decade_price`=#{decadePrice,jdbcType=BIGINT},
+        </if>
+        <if test="decadeDuration!=null">
+            `decade_duration`=#{decadeDuration,jdbcType=BIGINT},
+        </if>
+        <if test="notify!=null">
+            `notify`=#{notify,jdbcType=INTEGER},
+        </if>
+        <if test="updateTime!=null">
+            `update_time`=#{updateTime,jdbcType=BIGINT},
+        </if>
+        <if test="id!=null">
+            `id`=#{id,jdbcType=BIGINT},
+        </if>
+        <if test="endTip!=null">
+            `end_tip`=#{endTip,jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="itemId!=null">
+                AND `item_id`=#{itemId,jdbcType=BIGINT}
+            </if>
+            <if test="circleEndTime!=null">
+                AND `circle_end_time`=#{circleEndTime,jdbcType=BIGINT}
+            </if>
+            <if test="auctionDuration!=null">
+                AND `auction_duration`=#{auctionDuration,jdbcType=BIGINT}
+            </if>
+            <if test="circulation!=null">
+                AND `circulation`=#{circulation,jdbcType=INTEGER}
+            </if>
+            <if test="floorPrice!=null">
+                AND `floor_price`=#{floorPrice,jdbcType=BIGINT}
+            </if>
+            <if test="decadePrice!=null">
+                AND `decade_price`=#{decadePrice,jdbcType=BIGINT}
+            </if>
+            <if test="decadeDuration!=null">
+                AND `decade_duration`=#{decadeDuration,jdbcType=BIGINT}
+            </if>
+            <if test="notify!=null">
+                AND `notify`=#{notify,jdbcType=INTEGER}
+            </if>
+            <if test="createTime!=null">
+                AND `create_time`=#{createTime,jdbcType=BIGINT}
+            </if>
+            <if test="updateTime!=null">
+                AND `update_time`=#{updateTime,jdbcType=BIGINT}
+            </if>
+            <if test="id!=null">
+                AND `id`=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="endTip!=null">
+                AND `end_tip`=#{endTip,jdbcType=INTEGER}
+            </if>
+            <if test="itemIds!=null" >
+                <foreach collection="itemIds" index="index" item="item" separator=","
+                         open="AND `item_id` in (" close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="idQuery">
+        <where>
+            <if test="id!=null" >`id`=#{id}</if>
+            <if test="id==null" >1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="cn.idongjia.divine.db.mybatis.pojo.AuctionExtDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `auction_ext` (<include refid="fieldWithoutId" />) VALUES (<include refid="propertyWithoutId" />)
+    </insert>
+
+    <update id="update" parameterType="cn.idongjia.divine.db.mybatis.pojo.AuctionExtDO">
+        UPDATE `auction_ext`
+        <set><include refid="fieldEqPropertyIf" /></set>
+        <include refid="idQuery" />
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `auction_ext` <include refid="idQuery" />
+    </delete>
+
+    <select id="getByPrimaryKey" resultMap="fieldColumn">
+        SELECT <include refid="fieldAsProperty" /> FROM `auction_ext` <include refid="idQuery" />
+    </select>
+
+    <select id="select" resultMap="fieldColumn" parameterType="cn.idongjia.divine.db.mybatis.query.AuctionExtQuery">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `auction_ext`
+        <include refid="query"/>
+        <if test="orderBy != null">ORDER BY ${orderBy}</if>
+        <if test="limit != null">LIMIT ${limit}</if>
+        <if test="offset != null">OFFSET ${offset}</if>
+    </select>
+
+    <select id="count" resultType="Integer"  parameterType="cn.idongjia.divine.db.mybatis.query.AuctionExtQuery">
+        SELECT COUNT(1) FROM `auction_ext` <include refid="query"/>
+    </select>
+</mapper>

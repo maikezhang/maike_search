@@ -1,0 +1,19 @@
+double order_score=0d;
+double state =doc['state'].value;
+if(state==1&&!doc['weight'].empty){
+    order_score=3000000000000d;
+    long weight=doc['weight'].value;
+    order_score+=weight;
+}
+if(state==0&&!doc['weight'].empty){
+    order_score=2000000000000d;
+    long weight=doc['weight'].value;
+    order_score+=weight;
+}
+if(state==2&&!doc['weight'].empty){
+      order_score=1000000000000d;
+
+    long weight=doc['weight'].value;
+    order_score+=weight;
+}
+return order_score;

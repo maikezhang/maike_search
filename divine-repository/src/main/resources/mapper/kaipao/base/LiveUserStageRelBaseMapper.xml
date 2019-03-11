@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.LiveUserStageRelBaseMapper">
+
+    <resultMap id="fieldColumn" type="cn.idongjia.divine.db.mybatis.pojo.LiveUserStageRelDO">
+        <result property="id" column="id"/><!-- 主键 -->
+        <result property="stage" column="stage"/><!-- stage类型 0新用户 1老用户
+ -->
+        <result property="liveId" column="live_id"/><!-- 直播id -->
+        <result property="showStatus" column="show_status"/><!-- 0 不显示 1显示
+ -->
+        <result property="createTime" column="create_time"/><!-- 创建时间 -->
+        <result property="updateTime" column="update_time"/><!-- 更新时间 -->
+        <result property="status" column="status"/><!-- 0已失效(直播已结束) 1生效中 -->
+        <result property="weight" column="weight"/><!-- 权重 -->
+    </resultMap>
+
+    <sql id="fieldAsProperty">
+        `id`,
+        `stage`,
+        `live_id`,
+        `show_status`,
+        `create_time`,
+        `update_time`,
+        `status`,
+        `weight`
+    </sql>
+
+    <sql id="fieldWithoutId">
+        `stage`,
+        `live_id`,
+        `show_status`,
+        `create_time`,
+        `update_time`,
+        `status`,
+        `weight`
+    </sql>
+
+    <sql id="property">
+        #{id,jdbcType=BIGINT},
+        #{stage,jdbcType=INTEGER},
+        #{liveId,jdbcType=BIGINT},
+        #{showStatus,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT},
+        #{status,jdbcType=INTEGER},
+        #{weight,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="propertyWithoutId">
+        #{stage,jdbcType=INTEGER},
+        #{liveId,jdbcType=BIGINT},
+        #{showStatus,jdbcType=INTEGER},
+        #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT},
+        #{status,jdbcType=INTEGER},
+        #{weight,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqProperty">
+        `id`=#{id,jdbcType=BIGINT},
+        `stage`=#{stage,jdbcType=INTEGER},
+        `live_id`=#{liveId,jdbcType=BIGINT},
+        `show_status`=#{showStatus,jdbcType=INTEGER},
+        `create_time`=#{createTime,jdbcType=BIGINT},
+        `update_time`=#{updateTime,jdbcType=BIGINT},
+        `status`=#{status,jdbcType=INTEGER},
+        `weight`=#{weight,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqPropertyIf">
+        <if test="id!=null">
+            `id`=#{id,jdbcType=BIGINT},
+        </if>
+        <if test="stage!=null">
+            `stage`=#{stage,jdbcType=INTEGER},
+        </if>
+        <if test="liveId!=null">
+            `live_id`=#{liveId,jdbcType=BIGINT},
+        </if>
+        <if test="showStatus!=null">
+            `show_status`=#{showStatus,jdbcType=INTEGER},
+        </if>
+        <if test="createTime!=null">
+            `create_time`=#{createTime,jdbcType=BIGINT},
+        </if>
+        <if test="updateTime!=null">
+            `update_time`=#{updateTime,jdbcType=BIGINT},
+        </if>
+        <if test="status!=null">
+            `status`=#{status,jdbcType=INTEGER},
+        </if>
+        <if test="weight!=null">
+            `weight`=#{weight,jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id!=null">
+                AND `id`=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="stage!=null">
+                AND `stage`=#{stage,jdbcType=INTEGER}
+            </if>
+            <if test="liveId!=null">
+                AND `live_id`=#{liveId,jdbcType=BIGINT}
+            </if>
+            <if test="showStatus!=null">
+                AND `show_status`=#{showStatus,jdbcType=INTEGER}
+            </if>
+            <if test="createTime!=null">
+                AND `create_time`=#{createTime,jdbcType=BIGINT}
+            </if>
+            <if test="updateTime!=null">
+                AND `update_time`=#{updateTime,jdbcType=BIGINT}
+            </if>
+            <if test="status!=null">
+                AND `status`=#{status,jdbcType=INTEGER}
+            </if>
+            <if test="weight!=null">
+                AND `weight`=#{weight,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="idQuery">
+        <where>
+            <if test="id!=null" >`id`=#{id}</if>
+            <if test="id==null" >1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="cn.idongjia.divine.db.mybatis.pojo.LiveUserStageRelDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `live_user_stage_rel` (<include refid="fieldWithoutId" />) VALUES (<include refid="propertyWithoutId" />)
+    </insert>
+
+    <update id="update" parameterType="cn.idongjia.divine.db.mybatis.pojo.LiveUserStageRelDO">
+        UPDATE `live_user_stage_rel`
+        <set><include refid="fieldEqPropertyIf" /></set>
+        <include refid="idQuery" />
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `live_user_stage_rel` <include refid="idQuery" />
+    </delete>
+
+    <select id="getByPrimaryKey" resultMap="fieldColumn">
+        SELECT <include refid="fieldAsProperty" /> FROM `live_user_stage_rel` <include refid="idQuery" />
+    </select>
+
+    <select id="select" resultMap="fieldColumn" parameterType="cn.idongjia.divine.db.mybatis.query.LiveUserStageRelQuery">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `live_user_stage_rel`
+        <include refid="query"/>
+        <if test="orderBy != null">ORDER BY ${orderBy}</if>
+        <if test="limit != null">LIMIT ${limit}</if>
+        <if test="offset != null">OFFSET ${offset}</if>
+    </select>
+
+    <select id="count" resultType="Integer"  parameterType="cn.idongjia.divine.db.mybatis.query.LiveUserStageRelQuery">
+        SELECT COUNT(1) FROM `live_user_stage_rel` <include refid="query"/>
+    </select>
+</mapper>

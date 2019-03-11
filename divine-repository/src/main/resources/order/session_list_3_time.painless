@@ -1,0 +1,25 @@
+double session_score=0;
+double state =doc['state'].value;
+double time_divisor=10000000000000L;
+if(state==4){
+    if(!doc['planEndTime'].empty){
+           double planEndTime=    doc['planEndTime'].value;
+           session_score=time_divisor/planEndTime;
+    }
+}else if(state==2){
+   if(!doc['planEndTime'].empty){
+           double planEndTime=    doc['planEndTime'].value;
+           session_score=time_divisor/planEndTime;
+    }
+}else if(state==1){
+    if(!doc['planEndTime'].empty){
+            double planEndTime=    doc['planEndTime'].value;
+            session_score=time_divisor/planEndTime;
+    }
+}else if(state==3){
+    if(!doc['planEndTime'].empty){
+        double planEndTime=doc['planEndTime'].value;
+        session_score=planEndTime;
+    }
+}
+return session_score;

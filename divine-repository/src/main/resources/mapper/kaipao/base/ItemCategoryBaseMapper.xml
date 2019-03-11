@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.ItemCategoryBaseMapper">
+
+    <resultMap id="fieldColumn" type="cn.idongjia.divine.db.mybatis.pojo.ItemCategoryDO">
+        <result property="icid" column="icid"/><!-- 商品类目编号 -->
+        <result property="name" column="name"/><!-- 类目名称 -->
+        <result property="createtm" column="createtm"/><!-- 创建时间 -->
+        <result property="parentid" column="parentid"/><!-- 父类目编号 -->
+        <result property="weight" column="weight"/><!-- 权重 -->
+        <result property="status" column="status"/><!-- 0 新建 1 发布 -1 已删除 -->
+    </resultMap>
+
+    <sql id="fieldAsProperty">
+        `icid`,
+        `name`,
+        `createtm`,
+        `parentid`,
+        `weight`,
+        `status`
+    </sql>
+
+    <sql id="fieldWithoutId">
+        `name`,
+        `createtm`,
+        `parentid`,
+        `weight`,
+        `status`
+    </sql>
+
+    <sql id="property">
+        #{icid,jdbcType=INTEGER},
+        #{name,jdbcType=VARCHAR},
+        #{createtm,jdbcType=INTEGER},
+        #{parentid,jdbcType=INTEGER},
+        #{weight,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="propertyWithoutId">
+        #{name,jdbcType=VARCHAR},
+        #{createtm,jdbcType=INTEGER},
+        #{parentid,jdbcType=INTEGER},
+        #{weight,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqProperty">
+        `icid`=#{icid,jdbcType=INTEGER},
+        `name`=#{name,jdbcType=VARCHAR},
+        `createtm`=#{createtm,jdbcType=INTEGER},
+        `parentid`=#{parentid,jdbcType=INTEGER},
+        `weight`=#{weight,jdbcType=INTEGER},
+        `status`=#{status,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqPropertyIf">
+        <if test="icid!=null">
+            `icid`=#{icid,jdbcType=INTEGER},
+        </if>
+        <if test="name!=null">
+            `name`=#{name,jdbcType=VARCHAR},
+        </if>
+        <if test="createtm!=null">
+            `createtm`=#{createtm,jdbcType=INTEGER},
+        </if>
+        <if test="parentid!=null">
+            `parentid`=#{parentid,jdbcType=INTEGER},
+        </if>
+        <if test="weight!=null">
+            `weight`=#{weight,jdbcType=INTEGER},
+        </if>
+        <if test="status!=null">
+            `status`=#{status,jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="icid!=null">
+                AND `icid`=#{icid,jdbcType=INTEGER}
+            </if>
+            <if test="name!=null and name!=''">
+                AND `name`=#{name,jdbcType=VARCHAR}
+            </if>
+            <if test="createtm!=null">
+                AND `createtm`=#{createtm,jdbcType=INTEGER}
+            </if>
+            <if test="parentid!=null">
+                AND `parentid`=#{parentid,jdbcType=INTEGER}
+            </if>
+            <if test="weight!=null">
+                AND `weight`=#{weight,jdbcType=INTEGER}
+            </if>
+            <if test="status!=null">
+                AND `status`=#{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="idQuery">
+        <where>
+            <if test="icid!=null" >`icid`=#{icid}</if>
+            <if test="icid==null" >1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="cn.idongjia.divine.db.mybatis.pojo.ItemCategoryDO" useGeneratedKeys="true" keyProperty="icid">
+        INSERT INTO `kp_item_category` (<include refid="fieldWithoutId" />) VALUES (<include refid="propertyWithoutId" />)
+    </insert>
+
+    <update id="update" parameterType="cn.idongjia.divine.db.mybatis.pojo.ItemCategoryDO">
+        UPDATE `kp_item_category`
+        <set><include refid="fieldEqPropertyIf" /></set>
+        <include refid="idQuery" />
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `kp_item_category` <include refid="idQuery" />
+    </delete>
+
+    <select id="getByPrimaryKey" resultMap="fieldColumn">
+        SELECT <include refid="fieldAsProperty" /> FROM `kp_item_category` <include refid="idQuery" />
+    </select>
+
+    <select id="select" resultMap="fieldColumn" parameterType="cn.idongjia.divine.db.mybatis.query.ItemCategoryQuery">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `kp_item_category`
+        <include refid="query"/>
+        <if test="orderBy != null">ORDER BY ${orderBy}</if>
+        <if test="limit != null">LIMIT ${limit}</if>
+        <if test="offset != null">OFFSET ${offset}</if>
+    </select>
+
+    <select id="count" resultType="Integer"  parameterType="cn.idongjia.divine.db.mybatis.query.ItemCategoryQuery">
+        SELECT COUNT(1) FROM `kp_item_category` <include refid="query"/>
+    </select>
+</mapper>

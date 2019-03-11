@@ -1,0 +1,24 @@
+double scores = _score;
+double quality = 0;
+if (!doc['bookTotal'].empty)
+    quality += doc['bookTotal'].value * params.subscribers_f;
+if (!doc['offerTotal'].empty)
+    quality += doc['offerTotal'].value * params.uv_f;
+if (!doc['startTime'].empty && doc['startTime'].value!=-1000)
+    quality += ((doc['startTime'].value/1000 - params.current_time)) * params.start_time_f /3600;
+if (!doc['planEndTime'].empty && doc['planEndTime'].value!=-1000)
+    quality += ((doc['planEndTime'].value/1000 - params.current_time)) * params.end_time_f/3600;
+quality += params.time_base_score;
+double state_f = params.pre_start_f;
+if (!doc['state'].empty && (doc['state'].value == params.start))
+    state_f=params.start_f ;
+quality *= state_f/params.division;
+scores = scores* quality;
+if (scores < 0) scores = 0;
+else if (scores > params.max_quality)
+    scores = params.max_quality;
+if (params.user_type ==1 && !doc['newRecommendWeight'].empty)
+    scores += (doc['newRecommendWeight'].value + 1)* (params.max_quality + 1);
+if (params.user_type ==2 && !doc['oldRecommendWeight'].empty)
+    scores += (doc['oldRecommendWeight'].value + 1)* (params.max_quality + 1);
+return scores;

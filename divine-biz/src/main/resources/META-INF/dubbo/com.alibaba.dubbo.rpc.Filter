@@ -1,0 +1,14 @@
+echo=com.alibaba.dubbo.rpc.filter.EchoFilter
+clsLoader=com.alibaba.dubbo.rpc.filter.ClassLoaderFilter
+gnc=com.alibaba.dubbo.rpc.filter.GenericFilter
+dubbo=cn.idongjia.dubbo.filters.DubboExceptionFilter
+context=com.alibaba.dubbo.rpc.filter.ContextFilter
+timeout=com.alibaba.dubbo.rpc.filter.TimeoutFilter
+monitor=com.alibaba.dubbo.monitor.cn.idongjia.outcry.support.MonitorFilter;
+trace=com.alibaba.dubbo.rpc.protocol.dubbo.filter.TraceFilter
+##服务提供者上下文拦截器
+pctx=cn.idongjia.dubbo.context.ProviderContextFilter
+##服务消费者上下文拦截器
+cctx=cn.idongjia.dubbo.context.ConsumerContextFilter
+##监控服务并发数并且打印error日志，服务提供者消费者均可配置。使用方式如下
+concurrent=cn.idongjia.dubbo.filters.MonitorConcurrentFilter

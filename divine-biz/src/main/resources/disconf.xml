@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean" destroy-method="destroy">
+        <property name="scanPackage" value="cn.idongjia.divine"/>
+    </bean>
+    <bean id="disconfMgrBean2" class="com.baidu.disconf.client.DisconfMgrBeanSecond" init-method="init"
+            destroy-method="destroy"></bean>
+    <bean id="divineConfig" class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath*:zookeeper.properties</value>
+                <value>classpath*:mysql-divine.properties</value>
+                <value>classpath*:divine.properties</value>
+                <value>classpath*:task.properties</value>
+                <value>classpath*:es-item-index.properties</value>
+                <value>classpath*:redis.properties</value>
+                <value>classpath*:excephandler.properties</value>
+                <value>classpath*:sentinel.properties</value>
+                <value>classpath*:paul_thailand.properties</value>
+
+            </list>
+        </property>
+    </bean>
+    <bean id="propertyConfigurer"
+            class="com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="propertiesArray">
+            <list>
+                <ref bean="divineConfig"/>
+            </list>
+        </property>
+    </bean>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <array>
+                <value>classpath:disconf.properties</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="handlerConfig" class="cn.idongjia.excephandler.conf.HandlerConfig">
+        <property name="env" value="${excep.env}"/>
+        <property name="zkNodes" value="${zookeeper}"/>
+        <!--如下两个配置你可以配置在disconf里也可以写死在项目-->
+        <property name="projectName" value="divine"/>
+        <property name="projectCode" value="011"/>
+    </bean>
+    <bean id="disconfiValueManager" class="cn.idongjia.divine.conf.DisconfValueManager">
+        <property name="kaipaoTopic" value="${disconf.database.kaipao}"/>
+        <property name="userTopic" value="${disconf.database.user}"/>
+        <property name="zooTopic" value="${disconf.database.zoo}"/>
+    </bean>
+
+
+    <bean id="disconfHomePageSortManager" class="cn.idongjia.divine.disconfManager.DisconfHomePageSortManager">
+        <property name="msgWeight" value="${home_page_sort_msgweight}"/>
+        <property name="freshWeight" value="${home_page_sort_freshweight}"/>
+        <property name="uvWeight" value="${home_page_sort_uvweight}"/>
+    </bean>
+</beans>

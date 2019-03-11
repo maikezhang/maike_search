@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.AuctionBookMapper">
+
+    <!-- ================ 自定义内容 ================ -->
+    <!-- ================== start ================== -->
+
+    <!-- ================== end ================== -->
+    <select id="groupBySessionIds" resultType="cn.idongjia.divine.db.mybatis.pojo.CountPO">
+        select count(1) count,content_id id from auction_book where
+         status=0
+        <if test="contentType !=null">
+            and content_type =#{contentType}
+        </if>
+         and content_id in
+        <foreach collection="sessionIds" item="sessionId" separator="," open="(" close=")">
+            #{sessionId}
+        </foreach>
+        group  by content_id
+    </select>
+</mapper>

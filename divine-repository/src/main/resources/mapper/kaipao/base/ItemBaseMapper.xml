@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.ItemBaseMapper">
+
+    <resultMap id="fieldColumn" type="cn.idongjia.divine.db.mybatis.pojo.ItemDO">
+        <result property="iid" column="iid"/><!-- 商品编号 -->
+        <result property="pid" column="pid"/><!-- 所属商品分享编号 -->
+        <result property="uid" column="uid"/><!-- 商品发布人 -->
+        <result property="createtm" column="createtm"/><!-- 发布时间, ms -->
+        <result property="updatetm" column="updatetm"/><!-- 修改时间，包含上下架的时间 -->
+        <result property="title" column="title"/><!-- 商品名称 -->
+        <result property="category" column="category"/><!-- 所属类目 -->
+        <result property="pictures" column="pictures"/><!-- 配图, 序列化字段 -->
+        <result property="desc" column="desc"/><!-- 描述内容 -->
+        <result property="type" column="type"/><!-- 现货or定制 1 现货 2 定制 -->
+        <result property="stock" column="stock"/><!-- 库存量 -->
+        <result property="price" column="price"/><!-- 单价 -->
+        <result property="services" column="services"/><!-- 勾选的服务，如七天无理由退款  关联kp_item_service的id -->
+        <result property="evlcnt" column="evlcnt"/><!-- 评价数 -->
+        <result property="status" column="status"/><!-- 0 未上架 1 已上架 -1 已删除 -->
+        <result property="sellcnt" column="sellcnt"/><!-- 商品销售量 -->
+        <result property="starttm" column="starttm"/><!-- 开始时间 -->
+        <result property="data" column="data"/><!-- 序列化信息 -->
+        <result property="salestatus" column="salestatus"/><!-- 出售状态（0：售卖中,1：预售, 2：售卖中不可修改, 3：预售结束, 4：活动结束) -->
+        <result property="saletm" column="saletm"/><!-- 可购买时间 -->
+        <result property="activitystarttm" column="activitystarttm"/><!-- 活动开始时间 -->
+        <result property="forbidtm" column="forbidtm"/><!-- 商品禁售时间 -->
+        <result property="top" column="top"/><!--  -->
+        <result property="toptm" column="toptm"/><!--  -->
+        <result property="editstatus" column="editstatus"/><!-- 0 正常 1 禁止修改 -->
+        <result property="categoryId" column="category_id"/><!-- 类目ID -->
+        <result property="special" column="special"/><!-- 是否特殊属性，1白名单，0普通 -->
+    </resultMap>
+
+    <sql id="fieldAsProperty">
+        `iid`,
+        `pid`,
+        `uid`,
+        `createtm`,
+        `updatetm`,
+        `title`,
+        `category`,
+        `pictures`,
+        `desc`,
+        `type`,
+        `stock`,
+        `price`,
+        `services`,
+        `evlcnt`,
+        `status`,
+        `sellcnt`,
+        `starttm`,
+        `data`,
+        `salestatus`,
+        `saletm`,
+        `activitystarttm`,
+        `forbidtm`,
+        `top`,
+        `toptm`,
+        `editstatus`,
+        `category_id`,
+        `special`
+    </sql>
+
+    <sql id="fieldWithoutId">
+        `pid`,
+        `uid`,
+        `createtm`,
+        `updatetm`,
+        `title`,
+        `category`,
+        `pictures`,
+        `desc`,
+        `type`,
+        `stock`,
+        `price`,
+        `services`,
+        `evlcnt`,
+        `status`,
+        `sellcnt`,
+        `starttm`,
+        `data`,
+        `salestatus`,
+        `saletm`,
+        `activitystarttm`,
+        `forbidtm`,
+        `top`,
+        `toptm`,
+        `editstatus`,
+        `category_id`,
+        `special`
+    </sql>
+
+    <sql id="property">
+        #{iid,jdbcType=BIGINT},
+        #{pid,jdbcType=BIGINT},
+        #{uid,jdbcType=INTEGER},
+        #{createtm,jdbcType=INTEGER},
+        #{updatetm,jdbcType=INTEGER},
+        #{title,jdbcType=VARCHAR},
+        #{category,jdbcType=INTEGER},
+        #{pictures,jdbcType=VARCHAR},
+        #{desc,jdbcType=VARCHAR},
+        #{type,jdbcType=INTEGER},
+        #{stock,jdbcType=INTEGER},
+        #{price,jdbcType=DECIMAL},
+        #{services,jdbcType=VARCHAR},
+        #{evlcnt,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER},
+        #{sellcnt,jdbcType=INTEGER},
+        #{starttm,jdbcType=INTEGER},
+        #{data,jdbcType=VARCHAR},
+        #{salestatus,jdbcType=INTEGER},
+        #{saletm,jdbcType=BIGINT},
+        #{activitystarttm,jdbcType=BIGINT},
+        #{forbidtm,jdbcType=BIGINT},
+        #{top,jdbcType=INTEGER},
+        #{toptm,jdbcType=BIGINT},
+        #{editstatus,jdbcType=INTEGER},
+        #{categoryId,jdbcType=INTEGER},
+        #{special,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="propertyWithoutId">
+        #{pid,jdbcType=BIGINT},
+        #{uid,jdbcType=INTEGER},
+        #{createtm,jdbcType=INTEGER},
+        #{updatetm,jdbcType=INTEGER},
+        #{title,jdbcType=VARCHAR},
+        #{category,jdbcType=INTEGER},
+        #{pictures,jdbcType=VARCHAR},
+        #{desc,jdbcType=VARCHAR},
+        #{type,jdbcType=INTEGER},
+        #{stock,jdbcType=INTEGER},
+        #{price,jdbcType=DECIMAL},
+        #{services,jdbcType=VARCHAR},
+        #{evlcnt,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER},
+        #{sellcnt,jdbcType=INTEGER},
+        #{starttm,jdbcType=INTEGER},
+        #{data,jdbcType=VARCHAR},
+        #{salestatus,jdbcType=INTEGER},
+        #{saletm,jdbcType=BIGINT},
+        #{activitystarttm,jdbcType=BIGINT},
+        #{forbidtm,jdbcType=BIGINT},
+        #{top,jdbcType=INTEGER},
+        #{toptm,jdbcType=BIGINT},
+        #{editstatus,jdbcType=INTEGER},
+        #{categoryId,jdbcType=INTEGER},
+        #{special,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqProperty">
+        `iid`=#{iid,jdbcType=BIGINT},
+        `pid`=#{pid,jdbcType=BIGINT},
+        `uid`=#{uid,jdbcType=INTEGER},
+        `createtm`=#{createtm,jdbcType=INTEGER},
+        `updatetm`=#{updatetm,jdbcType=INTEGER},
+        `title`=#{title,jdbcType=VARCHAR},
+        `category`=#{category,jdbcType=INTEGER},
+        `pictures`=#{pictures,jdbcType=VARCHAR},
+        `desc`=#{desc,jdbcType=VARCHAR},
+        `type`=#{type,jdbcType=INTEGER},
+        `stock`=#{stock,jdbcType=INTEGER},
+        `price`=#{price,jdbcType=DECIMAL},
+        `services`=#{services,jdbcType=VARCHAR},
+        `evlcnt`=#{evlcnt,jdbcType=INTEGER},
+        `status`=#{status,jdbcType=INTEGER},
+        `sellcnt`=#{sellcnt,jdbcType=INTEGER},
+        `starttm`=#{starttm,jdbcType=INTEGER},
+        `data`=#{data,jdbcType=VARCHAR},
+        `salestatus`=#{salestatus,jdbcType=INTEGER},
+        `saletm`=#{saletm,jdbcType=BIGINT},
+        `activitystarttm`=#{activitystarttm,jdbcType=BIGINT},
+        `forbidtm`=#{forbidtm,jdbcType=BIGINT},
+        `top`=#{top,jdbcType=INTEGER},
+        `toptm`=#{toptm,jdbcType=BIGINT},
+        `editstatus`=#{editstatus,jdbcType=INTEGER},
+        `category_id`=#{categoryId,jdbcType=INTEGER},
+        `special`=#{special,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqPropertyIf">
+        <if test="iid!=null">
+            `iid`=#{iid,jdbcType=BIGINT},
+        </if>
+        <if test="pid!=null">
+            `pid`=#{pid,jdbcType=BIGINT},
+        </if>
+        <if test="uid!=null">
+            `uid`=#{uid,jdbcType=INTEGER},
+        </if>
+        <if test="createtm!=null">
+            `createtm`=#{createtm,jdbcType=INTEGER},
+        </if>
+        <if test="updatetm!=null">
+            `updatetm`=#{updatetm,jdbcType=INTEGER},
+        </if>
+        <if test="title!=null">
+            `title`=#{title,jdbcType=VARCHAR},
+        </if>
+        <if test="category!=null">
+            `category`=#{category,jdbcType=INTEGER},
+        </if>
+        <if test="pictures!=null">
+            `pictures`=#{pictures,jdbcType=VARCHAR},
+        </if>
+        <if test="desc!=null">
+            `desc`=#{desc,jdbcType=VARCHAR},
+        </if>
+        <if test="type!=null">
+            `type`=#{type,jdbcType=INTEGER},
+        </if>
+        <if test="stock!=null">
+            `stock`=#{stock,jdbcType=INTEGER},
+        </if>
+        <if test="price!=null">
+            `price`=#{price,jdbcType=DECIMAL},
+        </if>
+        <if test="services!=null">
+            `services`=#{services,jdbcType=VARCHAR},
+        </if>
+        <if test="evlcnt!=null">
+            `evlcnt`=#{evlcnt,jdbcType=INTEGER},
+        </if>
+        <if test="status!=null">
+            `status`=#{status,jdbcType=INTEGER},
+        </if>
+        <if test="sellcnt!=null">
+            `sellcnt`=#{sellcnt,jdbcType=INTEGER},
+        </if>
+        <if test="starttm!=null">
+            `starttm`=#{starttm,jdbcType=INTEGER},
+        </if>
+        <if test="data!=null">
+            `data`=#{data,jdbcType=VARCHAR},
+        </if>
+        <if test="salestatus!=null">
+            `salestatus`=#{salestatus,jdbcType=INTEGER},
+        </if>
+        <if test="saletm!=null">
+            `saletm`=#{saletm,jdbcType=BIGINT},
+        </if>
+        <if test="activitystarttm!=null">
+            `activitystarttm`=#{activitystarttm,jdbcType=BIGINT},
+        </if>
+        <if test="forbidtm!=null">
+            `forbidtm`=#{forbidtm,jdbcType=BIGINT},
+        </if>
+        <if test="top!=null">
+            `top`=#{top,jdbcType=INTEGER},
+        </if>
+        <if test="toptm!=null">
+            `toptm`=#{toptm,jdbcType=BIGINT},
+        </if>
+        <if test="editstatus!=null">
+            `editstatus`=#{editstatus,jdbcType=INTEGER},
+        </if>
+        <if test="categoryId!=null">
+            `category_id`=#{categoryId,jdbcType=INTEGER},
+        </if>
+        <if test="special!=null">
+            `special`=#{special,jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="iid!=null">
+                AND `iid`=#{iid,jdbcType=BIGINT}
+            </if>
+            <if test="pid!=null">
+                AND `pid`=#{pid,jdbcType=BIGINT}
+            </if>
+            <if test="uid!=null">
+                AND `uid`=#{uid,jdbcType=INTEGER}
+            </if>
+            <if test="createtm!=null">
+                AND `createtm`=#{createtm,jdbcType=INTEGER}
+            </if>
+            <if test="updatetm!=null">
+                AND `updatetm`=#{updatetm,jdbcType=INTEGER}
+            </if>
+            <if test="title!=null and title!=''">
+                AND `title`=#{title,jdbcType=VARCHAR}
+            </if>
+            <if test="category!=null">
+                AND `category`=#{category,jdbcType=INTEGER}
+            </if>
+            <if test="pictures!=null and pictures!=''">
+                AND `pictures`=#{pictures,jdbcType=VARCHAR}
+            </if>
+            <if test="desc!=null and desc!=''">
+                AND `desc`=#{desc,jdbcType=VARCHAR}
+            </if>
+            <if test="type!=null">
+                AND `type`=#{type,jdbcType=INTEGER}
+            </if>
+            <if test="stock!=null">
+                AND `stock`=#{stock,jdbcType=INTEGER}
+            </if>
+            <if test="price!=null">
+                AND `price`=#{price,jdbcType=DECIMAL}
+            </if>
+            <if test="services!=null and services!=''">
+                AND `services`=#{services,jdbcType=VARCHAR}
+            </if>
+            <if test="evlcnt!=null">
+                AND `evlcnt`=#{evlcnt,jdbcType=INTEGER}
+            </if>
+            <if test="status!=null">
+                AND `status`=#{status,jdbcType=INTEGER}
+            </if>
+            <if test="sellcnt!=null">
+                AND `sellcnt`=#{sellcnt,jdbcType=INTEGER}
+            </if>
+            <if test="starttm!=null">
+                AND `starttm`=#{starttm,jdbcType=INTEGER}
+            </if>
+            <if test="data!=null and data!=''">
+                AND `data`=#{data,jdbcType=VARCHAR}
+            </if>
+            <if test="salestatus!=null">
+                AND `salestatus`=#{salestatus,jdbcType=INTEGER}
+            </if>
+            <if test="saletm!=null">
+                AND `saletm`=#{saletm,jdbcType=BIGINT}
+            </if>
+            <if test="activitystarttm!=null">
+                AND `activitystarttm`=#{activitystarttm,jdbcType=BIGINT}
+            </if>
+            <if test="forbidtm!=null">
+                AND `forbidtm`=#{forbidtm,jdbcType=BIGINT}
+            </if>
+            <if test="top!=null">
+                AND `top`=#{top,jdbcType=INTEGER}
+            </if>
+            <if test="toptm!=null">
+                AND `toptm`=#{toptm,jdbcType=BIGINT}
+            </if>
+            <if test="editstatus!=null">
+                AND `editstatus`=#{editstatus,jdbcType=INTEGER}
+            </if>
+            <if test="categoryId!=null">
+                AND `category_id`=#{categoryId,jdbcType=INTEGER}
+            </if>
+            <if test="special!=null">
+                AND `special`=#{special,jdbcType=INTEGER}
+            </if>
+            <if test="itemIds!=null and itemIds.size>0">
+                and iid in
+                <foreach collection="itemIds" item="itemId" separator="," open="(" close=")">
+                  #{itemId}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="idQuery">
+        <where>
+            <if test="iid!=null" >`iid`=#{iid}</if>
+            <if test="iid==null" >1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="cn.idongjia.divine.db.mybatis.pojo.ItemDO" useGeneratedKeys="true" keyProperty="iid">
+        INSERT INTO `kp_item` (<include refid="fieldWithoutId" />) VALUES (<include refid="propertyWithoutId" />)
+    </insert>
+
+    <update id="update" parameterType="cn.idongjia.divine.db.mybatis.pojo.ItemDO">
+        UPDATE `kp_item`
+        <set><include refid="fieldEqPropertyIf" /></set>
+        <include refid="idQuery" />
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `kp_item` <include refid="idQuery" />
+    </delete>
+
+    <select id="getByPrimaryKey" resultMap="fieldColumn">
+        SELECT <include refid="fieldAsProperty" /> FROM `kp_item` <include refid="idQuery" />
+    </select>
+
+    <select id="select" resultMap="fieldColumn" parameterType="cn.idongjia.divine.db.mybatis.query.ItemQuery">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `kp_item`
+        <include refid="query"/>
+        <if test="orderBy != null">ORDER BY ${orderBy}</if>
+        <if test="limit != null">LIMIT ${limit}</if>
+        <if test="offset != null">OFFSET ${offset}</if>
+    </select>
+
+    <select id="count" resultType="Integer"  parameterType="cn.idongjia.divine.db.mybatis.query.ItemQuery">
+        SELECT COUNT(1) FROM `kp_item` <include refid="query"/>
+    </select>
+</mapper>

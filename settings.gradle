@@ -1,0 +1,7 @@
+rootProject.name = 'divine'
+
+include 'divine-lib'
+include 'divine-utils'
+include 'divine-biz'
+include 'divine-query'
+include 'divine-repository'

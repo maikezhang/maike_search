@@ -1,0 +1,39 @@
+
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'java'
+
+allprojects {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    group 'cn.idongjia'
+    apply plugin: 'idea'
+    buildDir = 'target'
+    configurations {
+        compile.exclude module: 'log4j'
+        compile.exclude module: 'slf4j-log4j12'
+    }
+
+    buildscript {
+        ext {
+            springBootVersion = '2.0.4.RELEASE'
+        }
+        repositories {
+            mavenCentral()
+        }
+
+    }
+
+
+
+
+
+}
+
+def getGitVersion(prefix, withGit) {
+    return prefix + (withGit ? ('-' + ('git rev-parse --short HEAD'.execute().text.trim())) : '')
+}
+
+
+
+

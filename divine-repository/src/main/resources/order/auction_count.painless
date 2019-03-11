@@ -1,0 +1,18 @@
+double order_score=0;
+double state =doc['state'].value;
+double started_score=300000000d
+double unstart_score=300000d
+
+if(state==1){
+    order_score+=started_score;
+}
+if(state==0){
+    order_score+=unstart_score;
+}
+if(state==2){
+    order_score=1000;
+    long endTime=doc['endTime'].value;
+    double end_score=1000000000000000d/endTime;
+    order_score+=end_score;
+}
+return order_score;

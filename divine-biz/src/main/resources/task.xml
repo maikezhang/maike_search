@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <task:annotation-driven/>
+
+
+
+    <!--<bean name="taskProvider" class="cn.idongjia.task.provider.init.TaskProvider" init-method="init"-->
+    <!--destroy-method="stop">-->
+    <!--<property name="clusterName" value="${task.cluster.name}"/>-->
+    <!--<property name="registAddr" value="${task.cluster.addr}"/>-->
+    <!--<property name="taskProviderGroup" value="DivineTaskExecutorProvider"/>-->
+    <!--<property name="zkClient" value="curator"/>-->
+    <!--</bean>-->
+    <!--<bean id="taskExcuter" class="cn.idongjia.task.excuter.init.TaskExcuter" init-method="init" destroy-method="stop">-->
+    <!--<property name="clusterName" value="${task.cluster.name}"/>-->
+    <!--<property name="taskExcuterGroup" value="DivineTaskExecutor"/>-->
+    <!--<property name="registAddr" value="${task.cluster.addr}"/>-->
+    <!--<property name="zkClient" value="curator"/>-->
+    <!--</bean>-->
+    <!--<bean id="taskRunnerScanner" class="cn.idongjia.task.excuter.annocation.TaskRunnerScanner">-->
+    <!--<property name="basePackage" value="cn.idongjia.divine.timer"/>-->
+    <!--</bean>-->
+    <!--<bean id="scheduler" class="cn.idongjia.schedule.Scheduler" lazy-init="false">-->
+        <!--<property name="tasks">-->
+            <!--<list>-->
+                <!--<ref bean="liveUVUpdateTimer"/>-->
+                <!--&lt;!&ndash;<ref bean="zooMessageUpdateTimer"/>&ndash;&gt;-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="liveUVUpdateTimer" class="cn.idongjia.divine.timer.LiveUVUpdateTimer">-->
+        <!--<property name="interval" value="300"/>-->
+        <!--<property name="name" value="LIVE_UV_UPDATE_CACHE"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="zooMessageUpdateTimer" class="cn.idongjia.divine.timer.ZooMessageUpdateTimer">-->
+    <!--<property name="interval" value="360" />-->
+    <!--<property name="name" value="ZOO_MESSAGE_UPDATE_TASK" />-->
+    <!--</bean>-->
+
+
+    <!-- paul-thailand -->
+    <!--task provider 任务提交器 -->
+    <bean id="paulTaskProvider" class="cn.idongjia.task.provider.TaskProvider"
+          init-method="init" destroy-method="close">
+        <property name="registyAddr" value="${task.registryAddr}"/> <!-- zk注册地址 -->
+        <property name="appName" value="PaulDivineTaskProvider"/> <!-- 应用app名称，需根据项目自行定义 -->
+        <property name="accessToken" value="${task.accessToken}"/> <!-- 任务执行器的接入标示，自定义，也可以为null -->
+    </bean>
+
+
+    <bean id="taskRunnerScanner" class="cn.idongjia.task.executor.annotation.TaskRunnerScanner">
+        <property name="basePackage"
+                  value="cn.idongjia.divine.task.taskRunner"/> <!-- 这里的路径为项目中taskRunner的类路径，需自行修改 -->
+        <property name="executor" ref="paulTaskExecutor"/>
+    </bean>
+
+    <bean id="paulTaskExecutor" class="cn.idongjia.task.executor.TaskExecutor"
+          init-method="init" destroy-method="close">
+        <property name="registryAddr" value="${task.registryAddr}"/>
+        <property name="group" value="PaulDivineTaskExecutor"/> <!-- 执行器组名，需根据项目自行定义 -->
+        <property name="appName" value="paulDivine"/> <!-- 应用app名称，需根据项目自行定义 -->
+        <property name="accessToken" value="${task.accessToken}"/>
+    </bean>
+
+    <!-- Paul thailand end -->
+
+
+
+
+
+</beans>

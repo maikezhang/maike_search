@@ -1,0 +1,21 @@
+double order_score=0;
+double state =doc['state'].value;
+if(state==1&&!doc['planEndTime'].empty){
+    order_score=3000;
+    long planEndTime=doc['planEndTime'].value;
+    double end_score=1000000000000000d/planEndTime;
+    order_score+=end_score;
+}
+if(state==0&&!doc['startTime'].empty){
+    order_score=2000;
+    long startTime=doc['startTime'].value;
+    double start_score=1000000000000000d/startTime;
+    order_score+=start_score;
+}
+if(state==2&&!doc['endTime'].empty){
+    order_score=1000;
+    long endTime=doc['endTime'].value;
+    double end_score=1000000000000000d/endTime;
+    order_score+=end_score;
+}
+return order_score;

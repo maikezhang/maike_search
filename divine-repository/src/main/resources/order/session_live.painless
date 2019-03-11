@@ -1,0 +1,16 @@
+double score = 0;
+if (!doc['liveState'].empty) {
+    double liveState = doc['liveState'].value;
+    if (liveState == 2) {
+        score = 5;
+    } else if (liveState == 1) {
+        score = 4;
+    } else if (liveState == 3) {
+        score = 3;
+    } else {
+        score = 2;
+    }
+} else {
+  score = 0;
+}
+return score;

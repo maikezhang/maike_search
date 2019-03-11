@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.idongjia.divine.db.mybatis.mapper.kaipao.base.AuctionBaseMapper">
+
+    <resultMap id="fieldColumn" type="cn.idongjia.divine.db.mybatis.pojo.AuctionDO">
+        <result property="id" column="id"/><!-- 自增主键 -->
+        <result property="iid" column="iid"/><!-- 拍品id 与item表iid相关 -->
+        <result property="uid" column="uid"/><!-- 最后出价人 -->
+        <result property="rid" column="rid"/><!--  -->
+        <result property="price" column="price"/><!-- 拍卖最终出价 -->
+        <result property="starttm" column="starttm"/><!-- 开始时间 -->
+        <result property="endtm" column="endtm"/><!-- 结束时间 -->
+        <result property="status" column="status"/><!-- 状态：-1删除，0正常,1流拍,2待支付 -->
+        <result property="state" column="state"/><!-- 状态：0未开始,1已经开始,2结束 -->
+        <result property="muid" column="muid"/><!-- 拍卖狮uid -->
+        <result property="refprice" column="refprice"/><!-- 拍品参考价 -->
+        <result property="interval" column="interval"/><!-- 最低加价范围 -->
+        <result property="nextiid" column="nextiid"/><!-- 下一个拍品 -->
+        <result property="sharedesc" column="sharedesc"/><!-- 分享描述 -->
+        <result property="lid" column="lid"/><!-- 阶梯规则id -->
+        <result property="commission" column="commission"/><!-- 佣金比例 -->
+        <result property="cmsprice" column="cmsprice"/><!-- 佣金金额 -->
+        <result property="deposit" column="deposit"/><!-- 保证金 -->
+        <result property="vdeposit" column="vdeposit"/><!-- 是否开启保证金验证 0-不开启,1-开启 -->
+        <result property="hot" column="hot"/><!-- 是否热门及权重，-1非热门，大于-1均为热门，正数为权重 -->
+        <result property="planetime" column="planetime"/><!-- 预计结拍时间 -->
+        <result property="ground" column="ground"/><!-- kp_auction_ground场次id -->
+        <result property="ending" column="ending"/><!-- 是否添加结拍置顶 0-否,1-是 -->
+        <result property="zid" column="zid"/><!-- 聊天室id -->
+        <result property="maxinterval" column="maxinterval"/><!-- 最大加价价格 -->
+        <result property="type" column="type"/><!-- 拍卖类型1、绝杀拍2、断崖拍 -->
+        <result property="orderCancelTime" column="order_cancel_time"/><!-- 订单关闭时间间隔 -->
+        <result property="cellingPrice" column="celling_price"/><!-- 拍卖封顶价 -->
+        <result property="depositNum" column="deposit_num"/><!-- 保证金额度 -->
+        <result property="related" column="related"/><!-- 能否关联（0：可关联 1：不可（默认） ) -->
+        <result property="maxContinuousOffer" column="max_continuous_offer"/><!-- 最大连续出价 -->
+    </resultMap>
+
+    <sql id="fieldAsProperty">
+        `id`,
+        `iid`,
+        `uid`,
+        `rid`,
+        `price`,
+        `starttm`,
+        `endtm`,
+        `status`,
+        `state`,
+        `muid`,
+        `refprice`,
+        `interval`,
+        `nextiid`,
+        `sharedesc`,
+        `lid`,
+        `commission`,
+        `cmsprice`,
+        `deposit`,
+        `vdeposit`,
+        `hot`,
+        `planetime`,
+        `ground`,
+        `ending`,
+        `zid`,
+        `maxinterval`,
+        `type`,
+        `order_cancel_time`,
+        `celling_price`,
+        `deposit_num`,
+        `related`,
+        `max_continuous_offer`
+    </sql>
+
+    <sql id="fieldWithoutId">
+        `iid`,
+        `uid`,
+        `rid`,
+        `price`,
+        `starttm`,
+        `endtm`,
+        `status`,
+        `state`,
+        `muid`,
+        `refprice`,
+        `interval`,
+        `nextiid`,
+        `sharedesc`,
+        `lid`,
+        `commission`,
+        `cmsprice`,
+        `deposit`,
+        `vdeposit`,
+        `hot`,
+        `planetime`,
+        `ground`,
+        `ending`,
+        `zid`,
+        `maxinterval`,
+        `type`,
+        `order_cancel_time`,
+        `celling_price`,
+        `deposit_num`,
+        `related`,
+        `max_continuous_offer`
+    </sql>
+
+    <sql id="property">
+        #{id,jdbcType=BIGINT},
+        #{iid,jdbcType=BIGINT},
+        #{uid,jdbcType=BIGINT},
+        #{rid,jdbcType=BIGINT},
+        #{price,jdbcType=DECIMAL},
+        #{starttm,jdbcType=BIGINT},
+        #{endtm,jdbcType=BIGINT},
+        #{status,jdbcType=INTEGER},
+        #{state,jdbcType=INTEGER},
+        #{muid,jdbcType=BIGINT},
+        #{refprice,jdbcType=DECIMAL},
+        #{interval,jdbcType=DECIMAL},
+        #{nextiid,jdbcType=BIGINT},
+        #{sharedesc,jdbcType=VARCHAR},
+        #{lid,jdbcType=INTEGER},
+        #{commission,jdbcType=DECIMAL},
+        #{cmsprice,jdbcType=DECIMAL},
+        #{deposit,jdbcType=DECIMAL},
+        #{vdeposit,jdbcType=INTEGER},
+        #{hot,jdbcType=INTEGER},
+        #{planetime,jdbcType=INTEGER},
+        #{ground,jdbcType=INTEGER},
+        #{ending,jdbcType=INTEGER},
+        #{zid,jdbcType=BIGINT},
+        #{maxinterval,jdbcType=DECIMAL},
+        #{type,jdbcType=INTEGER},
+        #{orderCancelTime,jdbcType=BIGINT},
+        #{cellingPrice,jdbcType=DECIMAL},
+        #{depositNum,jdbcType=DECIMAL},
+        #{related,jdbcType=INTEGER},
+        #{maxContinuousOffer,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="propertyWithoutId">
+        #{iid,jdbcType=BIGINT},
+        #{uid,jdbcType=BIGINT},
+        #{rid,jdbcType=BIGINT},
+        #{price,jdbcType=DECIMAL},
+        #{starttm,jdbcType=BIGINT},
+        #{endtm,jdbcType=BIGINT},
+        #{status,jdbcType=INTEGER},
+        #{state,jdbcType=INTEGER},
+        #{muid,jdbcType=BIGINT},
+        #{refprice,jdbcType=DECIMAL},
+        #{interval,jdbcType=DECIMAL},
+        #{nextiid,jdbcType=BIGINT},
+        #{sharedesc,jdbcType=VARCHAR},
+        #{lid,jdbcType=INTEGER},
+        #{commission,jdbcType=DECIMAL},
+        #{cmsprice,jdbcType=DECIMAL},
+        #{deposit,jdbcType=DECIMAL},
+        #{vdeposit,jdbcType=INTEGER},
+        #{hot,jdbcType=INTEGER},
+        #{planetime,jdbcType=INTEGER},
+        #{ground,jdbcType=INTEGER},
+        #{ending,jdbcType=INTEGER},
+        #{zid,jdbcType=BIGINT},
+        #{maxinterval,jdbcType=DECIMAL},
+        #{type,jdbcType=INTEGER},
+        #{orderCancelTime,jdbcType=BIGINT},
+        #{cellingPrice,jdbcType=DECIMAL},
+        #{depositNum,jdbcType=DECIMAL},
+        #{related,jdbcType=INTEGER},
+        #{maxContinuousOffer,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqProperty">
+        `id`=#{id,jdbcType=BIGINT},
+        `iid`=#{iid,jdbcType=BIGINT},
+        `uid`=#{uid,jdbcType=BIGINT},
+        `rid`=#{rid,jdbcType=BIGINT},
+        `price`=#{price,jdbcType=DECIMAL},
+        `starttm`=#{starttm,jdbcType=BIGINT},
+        `endtm`=#{endtm,jdbcType=BIGINT},
+        `status`=#{status,jdbcType=INTEGER},
+        `state`=#{state,jdbcType=INTEGER},
+        `muid`=#{muid,jdbcType=BIGINT},
+        `refprice`=#{refprice,jdbcType=DECIMAL},
+        `interval`=#{interval,jdbcType=DECIMAL},
+        `nextiid`=#{nextiid,jdbcType=BIGINT},
+        `sharedesc`=#{sharedesc,jdbcType=VARCHAR},
+        `lid`=#{lid,jdbcType=INTEGER},
+        `commission`=#{commission,jdbcType=DECIMAL},
+        `cmsprice`=#{cmsprice,jdbcType=DECIMAL},
+        `deposit`=#{deposit,jdbcType=DECIMAL},
+        `vdeposit`=#{vdeposit,jdbcType=INTEGER},
+        `hot`=#{hot,jdbcType=INTEGER},
+        `planetime`=#{planetime,jdbcType=INTEGER},
+        `ground`=#{ground,jdbcType=INTEGER},
+        `ending`=#{ending,jdbcType=INTEGER},
+        `zid`=#{zid,jdbcType=BIGINT},
+        `maxinterval`=#{maxinterval,jdbcType=DECIMAL},
+        `type`=#{type,jdbcType=INTEGER},
+        `order_cancel_time`=#{orderCancelTime,jdbcType=BIGINT},
+        `celling_price`=#{cellingPrice,jdbcType=DECIMAL},
+        `deposit_num`=#{depositNum,jdbcType=DECIMAL},
+        `related`=#{related,jdbcType=INTEGER},
+        `max_continuous_offer`=#{maxContinuousOffer,jdbcType=INTEGER}
+    </sql>
+
+    <sql id="fieldEqPropertyIf">
+        <if test="id!=null">
+            `id`=#{id,jdbcType=BIGINT},
+        </if>
+        <if test="iid!=null">
+            `iid`=#{iid,jdbcType=BIGINT},
+        </if>
+        <if test="uid!=null">
+            `uid`=#{uid,jdbcType=BIGINT},
+        </if>
+        <if test="rid!=null">
+            `rid`=#{rid,jdbcType=BIGINT},
+        </if>
+        <if test="price!=null">
+            `price`=#{price,jdbcType=DECIMAL},
+        </if>
+        <if test="starttm!=null">
+            `starttm`=#{starttm,jdbcType=BIGINT},
+        </if>
+        <if test="endtm!=null">
+            `endtm`=#{endtm,jdbcType=BIGINT},
+        </if>
+        <if test="status!=null">
+            `status`=#{status,jdbcType=INTEGER},
+        </if>
+        <if test="state!=null">
+            `state`=#{state,jdbcType=INTEGER},
+        </if>
+        <if test="muid!=null">
+            `muid`=#{muid,jdbcType=BIGINT},
+        </if>
+        <if test="refprice!=null">
+            `refprice`=#{refprice,jdbcType=DECIMAL},
+        </if>
+        <if test="interval!=null">
+            `interval`=#{interval,jdbcType=DECIMAL},
+        </if>
+        <if test="nextiid!=null">
+            `nextiid`=#{nextiid,jdbcType=BIGINT},
+        </if>
+        <if test="sharedesc!=null">
+            `sharedesc`=#{sharedesc,jdbcType=VARCHAR},
+        </if>
+        <if test="lid!=null">
+            `lid`=#{lid,jdbcType=INTEGER},
+        </if>
+        <if test="commission!=null">
+            `commission`=#{commission,jdbcType=DECIMAL},
+        </if>
+        <if test="cmsprice!=null">
+            `cmsprice`=#{cmsprice,jdbcType=DECIMAL},
+        </if>
+        <if test="deposit!=null">
+            `deposit`=#{deposit,jdbcType=DECIMAL},
+        </if>
+        <if test="vdeposit!=null">
+            `vdeposit`=#{vdeposit,jdbcType=INTEGER},
+        </if>
+        <if test="hot!=null">
+            `hot`=#{hot,jdbcType=INTEGER},
+        </if>
+        <if test="planetime!=null">
+            `planetime`=#{planetime,jdbcType=INTEGER},
+        </if>
+        <if test="ground!=null">
+            `ground`=#{ground,jdbcType=INTEGER},
+        </if>
+        <if test="ending!=null">
+            `ending`=#{ending,jdbcType=INTEGER},
+        </if>
+        <if test="zid!=null">
+            `zid`=#{zid,jdbcType=BIGINT},
+        </if>
+        <if test="maxinterval!=null">
+            `maxinterval`=#{maxinterval,jdbcType=DECIMAL},
+        </if>
+        <if test="type!=null">
+            `type`=#{type,jdbcType=INTEGER},
+        </if>
+        <if test="orderCancelTime!=null">
+            `order_cancel_time`=#{orderCancelTime,jdbcType=BIGINT},
+        </if>
+        <if test="cellingPrice!=null">
+            `celling_price`=#{cellingPrice,jdbcType=DECIMAL},
+        </if>
+        <if test="depositNum!=null">
+            `deposit_num`=#{depositNum,jdbcType=DECIMAL},
+        </if>
+        <if test="related!=null">
+            `related`=#{related,jdbcType=INTEGER},
+        </if>
+        <if test="maxContinuousOffer!=null">
+            `max_continuous_offer`=#{maxContinuousOffer,jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <sql id="query">
+        <where>
+            <if test="id!=null">
+                AND `id`=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="iid!=null">
+                AND `iid`=#{iid,jdbcType=BIGINT}
+            </if>
+            <if test="uid!=null">
+                AND `uid`=#{uid,jdbcType=BIGINT}
+            </if>
+            <if test="rid!=null">
+                AND `rid`=#{rid,jdbcType=BIGINT}
+            </if>
+            <if test="price!=null">
+                AND `price`=#{price,jdbcType=DECIMAL}
+            </if>
+            <if test="starttm!=null">
+                AND `starttm`=#{starttm,jdbcType=BIGINT}
+            </if>
+            <if test="endtm!=null">
+                AND `endtm`=#{endtm,jdbcType=BIGINT}
+            </if>
+            <if test="status!=null">
+                AND `status`=#{status,jdbcType=INTEGER}
+            </if>
+            <if test="state!=null">
+                AND `state`=#{state,jdbcType=INTEGER}
+            </if>
+            <if test="muid!=null">
+                AND `muid`=#{muid,jdbcType=BIGINT}
+            </if>
+            <if test="refprice!=null">
+                AND `refprice`=#{refprice,jdbcType=DECIMAL}
+            </if>
+            <if test="interval!=null">
+                AND `interval`=#{interval,jdbcType=DECIMAL}
+            </if>
+            <if test="nextiid!=null">
+                AND `nextiid`=#{nextiid,jdbcType=BIGINT}
+            </if>
+            <if test="sharedesc!=null and sharedesc!=''">
+                AND `sharedesc`=#{sharedesc,jdbcType=VARCHAR}
+            </if>
+            <if test="lid!=null">
+                AND `lid`=#{lid,jdbcType=INTEGER}
+            </if>
+            <if test="commission!=null">
+                AND `commission`=#{commission,jdbcType=DECIMAL}
+            </if>
+            <if test="cmsprice!=null">
+                AND `cmsprice`=#{cmsprice,jdbcType=DECIMAL}
+            </if>
+            <if test="deposit!=null">
+                AND `deposit`=#{deposit,jdbcType=DECIMAL}
+            </if>
+            <if test="vdeposit!=null">
+                AND `vdeposit`=#{vdeposit,jdbcType=INTEGER}
+            </if>
+            <if test="hot!=null">
+                AND `hot`=#{hot,jdbcType=INTEGER}
+            </if>
+            <if test="planetime!=null">
+                AND `planetime`=#{planetime,jdbcType=INTEGER}
+            </if>
+            <if test="ground!=null">
+                AND `ground`=#{ground,jdbcType=INTEGER}
+            </if>
+            <if test="ending!=null">
+                AND `ending`=#{ending,jdbcType=INTEGER}
+            </if>
+            <if test="zooId!=null">
+                AND `zid`=#{zooId,jdbcType=BIGINT}
+            </if>
+            <if test="maxinterval!=null">
+                AND `maxinterval`=#{maxinterval,jdbcType=DECIMAL}
+            </if>
+            <if test="type!=null">
+                AND `type`=#{type,jdbcType=INTEGER}
+            </if>
+            <if test="orderCancelTime!=null">
+                AND `order_cancel_time`=#{orderCancelTime,jdbcType=BIGINT}
+            </if>
+            <if test="cellingPrice!=null">
+                AND `celling_price`=#{cellingPrice,jdbcType=DECIMAL}
+            </if>
+            <if test="depositNum!=null">
+                AND `deposit_num`=#{depositNum,jdbcType=DECIMAL}
+            </if>
+            <if test="related!=null">
+                AND `related`=#{related,jdbcType=INTEGER}
+            </if>
+            <if test="maxContinuousOffer!=null">
+                AND `max_continuous_offer`=#{maxContinuousOffer,jdbcType=INTEGER}
+            </if>
+            <if test="statusArray !=null and statusArray.size>0">
+                AND status in
+                <foreach collection="statusArray" item="status" separator="," open="(" close=")">
+                    #{status}
+                </foreach>
+            </if>
+            <if test="itemIds !=null and itemIds.size>0">
+                AND iid in
+                <foreach collection="itemIds" item="itemId" separator="," open="(" close=")">
+                    #{itemId}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="idQuery">
+        <where>
+            <if test="id!=null" >`id`=#{id}</if>
+            <if test="id==null" >1=0</if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="cn.idongjia.divine.db.mybatis.pojo.AuctionDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `kp_auction` (<include refid="fieldWithoutId" />) VALUES (<include refid="propertyWithoutId" />)
+    </insert>
+
+    <update id="update" parameterType="cn.idongjia.divine.db.mybatis.pojo.AuctionDO">
+        UPDATE `kp_auction`
+        <set><include refid="fieldEqPropertyIf" /></set>
+        <include refid="idQuery" />
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `kp_auction` <include refid="idQuery" />
+    </delete>
+
+    <select id="getByPrimaryKey" resultMap="fieldColumn">
+        SELECT <include refid="fieldAsProperty" /> FROM `kp_auction` <include refid="idQuery" />
+    </select>
+
+    <select id="getByItemId" resultMap="fieldColumn">
+        SELECT <include refid="fieldAsProperty" /> FROM `kp_auction` where iid=#{itemId}
+    </select>
+
+    <select id="select" resultMap="fieldColumn" parameterType="cn.idongjia.divine.db.mybatis.query.AuctionQuery">
+        SELECT
+        <include refid="fieldAsProperty"/>
+        FROM `kp_auction`
+        <include refid="query"/>
+        <if test="orderBy != null">ORDER BY ${orderBy}</if>
+        <if test="limit != null">LIMIT ${limit}</if>
+        <if test="offset != null">OFFSET ${offset}</if>
+    </select>
+
+    <select id="count" resultType="Integer"  parameterType="cn.idongjia.divine.db.mybatis.query.AuctionQuery">
+        SELECT COUNT(1) FROM `kp_auction` <include refid="query"/>
+    </select>
+</mapper>

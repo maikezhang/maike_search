@@ -1,0 +1,37 @@
+# idea and gradle temp file
+build/
+classes/
+
+# IDE
+*.iml
+*.ipr
+*.iws
+*.log
+.project
+.classpath
+.settings/
+classes/
+.idea/
+.gradle/
+./zookeeper.out
+\~/*
+bin/
+out/
+tmp/
+disconf/
+.vscode/
+codeMakerConfig.xml
+makeCode
+target/
+
+# log
+logs/
+
+# vi
+*.swp
+
+# ios
+.DS_Store
+
+# disconf
+disconf/

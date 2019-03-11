@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'cn.idongjia'
+sourceCompatibility = 1.8
+version getGitVersion('1.0.0', true)
+
+
+
+dependencies {
+    compile(project(':divine-lib')) {
+        exclude group: 'org.mongo'
+    }
+    compile 'com.lmax:disruptor:3.4.2'
+
+}
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}

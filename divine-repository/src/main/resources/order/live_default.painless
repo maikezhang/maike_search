@@ -1,0 +1,21 @@
+double order_score=0;
+double state =doc['state'].value;
+if(state==2&&!doc['startTime'].empty){
+    order_score=30000;
+    long startTime=doc['startTime'].value;
+    double start_score=startTime/1000000000d;
+    order_score+=start_score;
+}
+if(state==1&&!doc['preStartTime'].empty){
+    order_score=20000;
+    long preStartTime=doc['preStartTime'].value;
+    double pre_start_score=1000000000d/preStartTime;
+    order_score+=pre_start_score;
+}
+if(state==3&&!doc['endTime'].empty){
+    order_score=10000;
+    long endTime=doc['endTime'].value;
+    double end_score=endTime/1000000000d;
+    order_score+=end_score;
+}
+return order_score;

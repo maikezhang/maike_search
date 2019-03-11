@@ -1,0 +1,5 @@
+double session_score=0;
+if (!doc['weight'].empty) {
+    session_score=doc['weight'].value;
+}
+return session_score;
